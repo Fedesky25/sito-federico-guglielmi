@@ -1,0 +1,10 @@
+<svg viewBox="-10 -10 380 470">
+    <!--rect width="360" height="450" fill="none" rx="22" ry="22" stroke="black" stroke-width="2" stroke-opacity="0.2" /-->
+    <path d="M60,0 L335,0 A25,25,0,0,1,360,25 L360,425 A25,25,0,0,1,335,450 L60,450 Z" fill="#9AB973"/>
+    <path d="M54,0 L54,450 L25,450 A25,25,0,0,1,0,425 L0,25 A25,25,0,0,1,25,0 Z" fill="#414141"/>
+    <polygon points="54,0 60,0 60,450, 54,450" fill="282828" />
+    <polygon points="296,0 360,64 360,296 214,146" fill="#85a749" />
+    <polygon points="214,0 296,0 296,180 255,152 214,180" fill="#ededed" />
+    <polygon points="120,240 120,274 300,274 300,240" fill="#6b8f1e" />
+    <polygon points="150,300 150,334 270,334 270,300" fill="#6b8f1e" />
+</svg>

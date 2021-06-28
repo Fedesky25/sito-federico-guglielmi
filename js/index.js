@@ -6,6 +6,7 @@
 */
 function smoothScrollTo(target, offset, duration) {
     let start = window.scrollY, end = target.offsetTop - offset, delta, initialTime;
+    console.log(end);
     if (end > document.body.scrollHeight - window.innerHeight) delta = document.body.scrollHeight - window.innerHeight - start;
     else if (end < 0) delta = - start; else delta = end - start;
     function animate(timeStamp) {
@@ -21,5 +22,10 @@ function quadInOut (t, b, c, d) {t /= d/2; if (t < 1) return c/2*t*t + b; t--; r
 document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
     const target = document.getElementById(anchor.getAttribute('href').slice(1));
     if(!target) return;
-    anchor.addEventListener('click', e=>{e.preventDefault(); smoothScrollTo(target, 50, 350); anchor.blur();})
+    anchor.addEventListener('click', e=>{
+        e.preventDefault();
+        smoothScrollTo(target, 50, 350);
+        anchor.blur();
+        location.hash = target.id;
+    })
 });

@@ -1,0 +1,123 @@
+:root {
+    --icon-dim: 6rem;
+}
+
+.lang-container {
+    padding: 4rem;
+    position: relative;
+}
+#lang-name {
+    font-size: 2rem;
+}
+.languages {
+    list-style: none;
+    position: absolute;
+    bottom: 2.5rem;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+}
+.languages > li {
+    margin: 0 .3rem;
+    padding: .4rem;
+    cursor: pointer;
+    border-radius: .4rem;
+    transition: background-color .2s ease;
+}
+.languages > li:hover {
+    background-color: #f6f6f6;
+}
+.languages svg {
+    height: 2.5rem;
+    max-height: 2.5rem;
+    width: auto;
+    display: block;
+}
+
+
+.masonry {
+    column-width: 30ch;
+    column-gap: 2rem;
+    padding: 2rem;
+}
+
+.card {
+    display: inline-block;
+    width: 100%;
+    padding: 1rem 1.2rem;
+    margin: 1rem 0;
+    border-radius: 1rem;
+    box-shadow: 0 0 1.5rem rgba(0,0,0,.1);
+}
+.card__icon {
+    display: block;
+    margin: 0 auto;
+    max-width: var(--icon-dim);
+    max-height: var(--icon-dim);
+}
+.card__icon--float {
+    float: left;
+    margin: unset;
+    margin-right: 1ch;
+}
+.card__icons {
+    display: flex;
+    justify-content: space-evenly;
+    height: var(--icon-dim);
+}
+.card__icons > * {
+    display: block;
+    width: var(--icon-dim);
+    max-height: var(--icon-dim);
+}
+.card__title {
+    text-align: center;
+    color: var(--dark-cyan);
+    font-size: 1.5rem;
+    margin: .5rem 0;
+}
+.card__text {
+    text-align: justify;
+    color: #333;
+}
+.card__text + .card__text {margin-top: 0.5rem;}
+.split {
+    margin-bottom: 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+}
+/* @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@500&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital@0;1&display=swap');
+.code-container {
+    background-color: #282A36;
+    color: white;
+    font-family: 'Source Code Pro', monospace;
+    padding: 1rem 1.2rem;
+    transition: background-color .2s ease;
+    overflow: hidden;
+}
+
+.js-keyword {color: #F286C4;}
+.js-fname {color: #62E884;}
+.js-value {color: #BF9EEE;}
+.js-arg {color: #FFB86C;}
+.js-string {color: #E7EE98;}
+
+.TW-active-typing::after {
+    content: '|';
+    animation: TW-cursor-pulsating 1s infinite;
+}
+@keyframes TW-cursor-pulsating {
+    0% {opacity: 0;}
+    20% {opacity: 0;}
+    30% {opacity: 1;}
+    70% {opacity: 1;}
+    80% {opacity: 0;}
+    100% {opacity: 0;}
+}
+
+section + section {margin-top: 6rem;}
+
+

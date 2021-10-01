@@ -18,14 +18,16 @@
     display: flex;
     justify-content: center;
 }
-.languages > li {
+.languages > button {
     margin: 0 .3rem;
     padding: .4rem;
     cursor: pointer;
     border-radius: .4rem;
+    border: 0;
+    background-color: white;
     transition: background-color .2s ease;
 }
-.languages > li:hover {
+.languages > button:hover {
     background-color: #f6f6f6;
 }
 .languages svg {

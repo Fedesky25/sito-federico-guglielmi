@@ -333,8 +333,7 @@ function applyStyleToSpan(s, o) {
 
 const tw = new TypeWriter(document.querySelector('.code-container'), {
     applyStyleAfter: true,
-    type_speed: [10, 20],
-    erase_speed: [1, 10],
+    type_speed: 'fast',
     loop: true
 });
 tw.parse(
@@ -355,4 +354,4 @@ tw.parse(
     v: 'js-value',
     a: 'js-arg',
     f: 'js-fname'
-});
+}).start();

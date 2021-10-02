@@ -657,7 +657,7 @@ var app = (function () {
 
     const dt_e6 = writable_init(250);
 
-    const particle_life = writable_init(120);
+    const particle_life = writable_init(4);
 
     const px_gap = writable_init(12);
 
@@ -894,109 +894,13 @@ var app = (function () {
     }
     window.Complex = Complex;
 
-    const tm = [new Complex(), new Complex(), new Complex(), new Complex()];
-
-    /**@type {Object.<string, {label: string, fn: Function}[]>} */
-    var fns = {
-        polynomials: [
-            {
-                label: 'z<sub>1</sub>x + z<sub>2</sub>',
-                fn: c => tm[0].eq(c).mul(z1).add(z2),
-            },
-            {
-                label: 'z<sub>1</sub>x<sup>2</sup> + z<sub>2</sub>x + z<sub>3</sub>',
-                fn: c => tm[0].toZero().add$(
-                    tm[1].eq(c).mul$(c, z1),
-                    tm[2].eq(c).mul(z2),
-                    z3
-                ),
-            },
-            {
-                label: 'z<sub>1</sub>x<sup>3</sup> + z<sub>2</sub>x + z<sub>3</sub>',
-                fn: c => tm[0].toZero().add$(
-                    tm[1].eq(c).mul$(c, c, z1),
-                    tm[2].eq(c).mul(z2),
-                    z3
-                ),
-            },
-            {
-                label: '(x - z<sub>1</sub>)(x - z<sub>2</sub>)(x - z<sub>3</sub>)',
-                fn: c => tm[0].eq(c).mul_r(10).add(10),
-            }, 
-        ],
-        powers: [
-            {
-                label: 'x<sup>k</sup>',
-                fn: c => tm[0].eq(c).exp_n(otherVars.k),
-            },
-            {
-                label: 'x<sup>r</sup><sub>k</sub>',
-                fn: c => tm[0].eq(c).exp_r(otherVars.r, otherVars.k),
-            },
-            {
-                label: 'x<sup>z<sub>1</sub></sup><sub>k</sub>',
-                fn: c => tm[0].eq(c).exp(z1, otherVars.k),
-            },
-        ],
-        exponentials: [
-            {
-                label: 'e<sup>x</sup>',
-                fn: c => tm[0].eq(c).exponentiate(),
-            },
-            {
-                label: 'e<sup>z<sub>1</sub>x</sup>',
-                fn: c => tm[0].eq(c).mul(z1).exponentiate(),
-            },
-            {
-                label: 'e<sup>x<sup>2</sup></sup>',
-                fn: c => tm[0].eq(c).mul(c).exponentiate(),
-            },
-            {
-                label: 'e<sup>x<sup>2</sup>+x</sup>',
-                fn: c => tm[0].eq(c).mul(c).add(c).exponentiate(),
-            },
-            {
-                label: 'z<sub>1</sub><sup>x</sup>',
-                fn: c => tm[0].eq(z1).exp(c, otherVars.k),
-            },
-            {
-                label: 'x<sup>3</sup>e<sup>x</sup>',
-                fn: c => tm[0].eq(c).exponentiate().mul$(c, c, c),
-            },
-        ],
-        logarithms: [
-            {
-                label: 'ln(x + z<sub>1</sub>)<sub>k</sub>',
-                fn: c => tm[0].eq(c).add(z1).logarize(otherVars.k),
-            },
-        ],
-        miscellaneous: [
-            {
-                label: '<span class="overline">x</span>i',
-                fn: c => tm[0].eq(c).toConjugate().mul_i(),
-            },
-            {
-                label: '<span class="overline">x</span>z<sub>1</sub>',
-                fn: c => tm[0].eq(c).toConjugate().mul(z1),
-            },
-            {
-                label: `(x<sup>2</sup> - z<sub>1</sub>) (x - z<sub>2</sub>)<sup>2</sup> / (x<sup>2</sup> + z<sub>3</sub>)`,
-                fn: c => tm[0].toOne().mul$(
-                    tm[1].eq(c).mul(c).sub(z1),
-                    tm[2].eq(c).sub(z2).exp_r(2),
-                    tm[3].eq(c).mul(c).add(z3).toReciprocal()
-                ),
-            },
-        ],
-    };
-
     const z1 = Complex.ReIm(-1, 1);
     const z2 = Complex.ModArg(2, Math.PI/4);
     const z3 = new Complex();
 
     const otherVars = { r: .5, k: 0 };
 
-    const complex_function = writable(fns.polynomials[0].fn);
+    const complex_function = writable(c => Complex.ReIm(c.real, c.imag));
 
     function debouce(fn, delay) {
         let timer;
@@ -1084,6 +988,7 @@ var app = (function () {
         /**@type {Number}*/len = 0,
         /**@type {Number}*/maxLife=120;
     particle_life.subscribe(v => {
+        v *= 30;
         for(i=0; i<len; i++) lives[i] = Math.round(lives[i]/maxLife * v);
         maxLife = v;
     });
@@ -1718,19 +1623,19 @@ var app = (function () {
     	let t24;
     	let div8;
     	let h35;
-    	let t26;
-    	let input7;
     	let t27;
+    	let input7;
+    	let t28;
     	let div9;
     	let h36;
-    	let t29;
-    	let input8;
     	let t30;
+    	let input8;
+    	let t31;
     	let div10;
     	let h37;
-    	let t32;
-    	let input9;
     	let t33;
+    	let input9;
+    	let t34;
     	let button1;
     	let mounted;
     	let dispose;
@@ -1787,22 +1692,22 @@ var app = (function () {
     			t24 = space();
     			div8 = element("div");
     			h35 = element("h3");
-    			h35.textContent = "life (frames)";
-    			t26 = space();
-    			input7 = element("input");
+    			h35.innerHTML = `life <i class="bracket left svelte-p3ubdq"></i>×30 frames<i class="bracket right svelte-p3ubdq"></i>`;
     			t27 = space();
+    			input7 = element("input");
+    			t28 = space();
     			div9 = element("div");
     			h36 = element("h3");
     			h36.textContent = "Number of colors";
-    			t29 = space();
-    			input8 = element("input");
     			t30 = space();
+    			input8 = element("input");
+    			t31 = space();
     			div10 = element("div");
     			h37 = element("h3");
     			h37.textContent = "Color multiplier";
-    			t32 = space();
-    			input9 = element("input");
     			t33 = space();
+    			input9 = element("input");
+    			t34 = space();
     			button1 = element("button");
     			button1.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" class="svelte-p3ubdq"><use href="#settings-svg"></use></svg>`;
     			attr(h20, "class", "svelte-p3ubdq");
@@ -1890,19 +1795,19 @@ var app = (function () {
     			append(div11, t24);
     			append(div11, div8);
     			append(div8, h35);
-    			append(div8, t26);
+    			append(div8, t27);
     			append(div8, input7);
-    			append(div11, t27);
+    			append(div11, t28);
     			append(div11, div9);
     			append(div9, h36);
-    			append(div9, t29);
+    			append(div9, t30);
     			append(div9, input8);
-    			append(div11, t30);
+    			append(div11, t31);
     			append(div11, div10);
     			append(div10, h37);
-    			append(div10, t32);
+    			append(div10, t33);
     			append(div10, input9);
-    			insert(target, t33, anchor);
+    			insert(target, t34, anchor);
     			insert(target, button1, anchor);
 
     			if (!mounted) {
@@ -1910,7 +1815,7 @@ var app = (function () {
     					listen(button0, "click", /*reset*/ ctx[1]),
     					action_destroyer(forceBounds.call(null, input5, { min: 2, max: 20, store: px_gap })),
     					action_destroyer(forceBounds.call(null, input6, { min: 1, max: 2000, store: dt_e6 })),
-    					action_destroyer(forceBounds.call(null, input7, { min: 30, max: 600, store: particle_life })),
+    					action_destroyer(forceBounds.call(null, input7, { min: 1, max: 40, store: particle_life })),
     					action_destroyer(forceBounds.call(null, input8, { min: 2, max: 20, store: clr_num })),
     					action_destroyer(forceBounds.call(null, input9, { min: 1, max: 200, store: clr_factor })),
     					listen(button1, "click", /*click_handler*/ ctx[2])
@@ -1932,7 +1837,7 @@ var app = (function () {
     		o: noop,
     		d(detaching) {
     			if (detaching) detach(div12);
-    			if (detaching) detach(t33);
+    			if (detaching) detach(t34);
     			if (detaching) detach(button1);
     			mounted = false;
     			run_all(dispose);
@@ -1961,6 +1866,110 @@ var app = (function () {
     	}
     }
 
+    const tm = [new Complex(), new Complex(), new Complex(), new Complex()];
+
+    /**@type {Object.<string, {label: string, fn: Function}[]>} */
+    var fns = {
+        polynomials: [
+            {
+                label: 'z<sub>1</sub>x + z<sub>2</sub>',
+                fn: c => tm[0].eq(c).mul(z1).add(z2),
+            },
+            {
+                label: 'z<sub>1</sub>x<sup>2</sup> + z<sub>2</sub>x + z<sub>3</sub>',
+                fn: c => tm[0].toZero().add$(
+                    tm[1].eq(c).mul$(c, z1),
+                    tm[2].eq(c).mul(z2),
+                    z3
+                ),
+            },
+            {
+                label: 'z<sub>1</sub>x<sup>3</sup> + z<sub>2</sub>x + z<sub>3</sub>',
+                fn: c => tm[0].toZero().add$(
+                    tm[1].eq(c).mul$(c, c, z1),
+                    tm[2].eq(c).mul(z2),
+                    z3
+                ),
+            },
+            {
+                label: '(x - z<sub>1</sub>)(x - z<sub>2</sub>)(x - z<sub>3</sub>)',
+                fn: c => tm[0].eq(c).mul_r(10).add(10),
+            }, 
+        ],
+        powers: [
+            {
+                label: 'x<sup>k</sup>',
+                fn: c => tm[0].eq(c).exp_n(otherVars.k),
+            },
+            {
+                label: 'x<sup>r</sup><sub>k</sub>',
+                fn: c => tm[0].eq(c).exp_r(otherVars.r, otherVars.k),
+            },
+            {
+                label: 'x<sup>z<sub>1</sub></sup><sub>k</sub>',
+                fn: c => tm[0].eq(c).exp(z1, otherVars.k),
+            },
+        ],
+        exponentials: [
+            {
+                label: 'e<sup>x</sup>',
+                fn: c => tm[0].eq(c).exponentiate(),
+            },
+            {
+                label: 'e<sup>z<sub>1</sub>x</sup>',
+                fn: c => tm[0].eq(c).mul(z1).exponentiate(),
+            },
+            {
+                label: 'e<sup>x<sup>2</sup></sup>',
+                fn: c => tm[0].eq(c).mul(c).exponentiate(),
+            },
+            {
+                label: 'e<sup>x<sup>2</sup>+x</sup>',
+                fn: c => tm[0].eq(c).mul(c).add(c).exponentiate(),
+            },
+            {
+                label: 'z<sub>1</sub><sup>x</sup>',
+                fn: c => tm[0].eq(z1).exp(c, otherVars.k),
+            },
+            {
+                label: 'x<sup>3</sup>e<sup>x</sup>',
+                fn: c => tm[0].eq(c).exponentiate().mul$(c, c, c),
+            },
+        ],
+        logarithms: [
+            {
+                label: 'z<sub>1</sub>ln(x)<sub>k</sub>',
+                fn: c => tm[0].eq(c).logarize(otherVars.k).mul(z1),
+            },
+            {
+                label: 'x ln(x)<sub>k</sub>',
+                fn: c => tm[0].eq(c).logarize(otherVars.k).mul(c),
+            },
+            {
+                label: 'ln(x + z<sub>1</sub>)<sub>k</sub>',
+                fn: c => tm[0].eq(c).add(z1).logarize(otherVars.k),
+            },
+        ],
+        miscellaneous: [
+            {
+                label: '<span class="overline">x</span>i',
+                fn: c => tm[0].eq(c).toConjugate().mul_i(),
+            },
+            {
+                label: '<span class="overline">x</span>z<sub>1</sub>',
+                fn: c => tm[0].eq(c).toConjugate().mul(z1),
+            },
+            {
+                label: `(x<sup>2</sup> - z<sub>1</sub>) (x - z<sub>2</sub>)<sup>2</sup> / (x<sup>2</sup> + z<sub>3</sub>)`,
+                fn: c => tm[0].toOne().mul$(
+                    tm[1].eq(c).mul(c).sub(z1),
+                    tm[2].eq(c).sub(z2).exp_r(2),
+                    tm[3].eq(c).mul(c).add(z3).toReciprocal()
+                ),
+            },
+        ],
+    };
+
     /* svelte\FunctionSelect.svelte generated by Svelte v3.43.0 */
 
     function get_each_context(ctx, list, i) {
@@ -1975,7 +1984,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (23:12) {#each fns[key] as opt}
+    // (27:12) {#each fns[key] as opt}
     function create_each_block_1(ctx) {
     	let div;
     	let raw_value = /*opt*/ ctx[9].label + "";
@@ -2011,7 +2020,7 @@ var app = (function () {
     	};
     }
 
-    // (21:8) {#each Object.keys(fns) as key}
+    // (25:8) {#each Object.keys(fns) as key}
     function create_each_block(ctx) {
     	let h3;
     	let t0_value = /*key*/ ctx[6] + "";
@@ -2177,11 +2186,14 @@ var app = (function () {
     function instance$3($$self, $$props, $$invalidate) {
     	let options;
     	let label = fns.polynomials[0].label;
+    	complex_function.set(fns.polynomials[0].fn);
 
     	function sel(opt) {
+    		suspend(true);
     		$$invalidate(1, label = opt.label);
     		complex_function.set(opt.fn);
     		setTimeout(() => options.blur(), 10);
+    		suspend(false);
     	}
 
     	const click_handler = () => options.focus();
@@ -2335,19 +2347,23 @@ var app = (function () {
     	});
 
     	function RIchange() {
+    		suspend(true);
     		$$invalidate(0, number.real = Number(inputs.real.value) || 0, number);
     		$$invalidate(0, number.imag = Number(inputs.imag.value) || 0, number);
     		$$invalidate(1, inputs.mod.value = Math.sqrt(number.real * number.real + number.imag * number.imag), inputs);
     		let arg = Math.atan2(number.imag, number.real);
     		$$invalidate(1, inputs.arg.value = ($deg ? arg * 180 : arg) / Math.PI, inputs);
+    		suspend(false);
     	}
 
     	function MAchange() {
+    		suspend(true);
     		let mod = Number(inputs.mod.value);
     		let arg = Number(inputs.arg.value) * Math.PI;
     		if ($deg) arg /= 180;
     		$$invalidate(1, inputs.real.value = $$invalidate(0, number.real = mod * Math.cos(arg), number), inputs);
     		$$invalidate(1, inputs.imag.value = $$invalidate(0, number.imag = mod * Math.sin(arg), number), inputs);
+    		suspend(false);
     	}
 
     	function input0_binding($$value) {
@@ -2441,8 +2457,6 @@ var app = (function () {
     	let input2_value_value;
     	let t28;
     	let button;
-    	let t29;
-    	let div3;
     	let current;
     	let mounted;
     	let dispose;
@@ -2484,43 +2498,38 @@ var app = (function () {
     			t18 = space();
     			div1 = element("div");
     			h33 = element("h3");
-    			h33.innerHTML = `real <span class="bold svelte-rxubrt">r</span> =`;
+    			h33.innerHTML = `real <span class="bold svelte-1igd3ky">r</span> =`;
     			t22 = space();
     			input1 = element("input");
     			t23 = space();
     			h34 = element("h3");
-    			h34.innerHTML = `integer <span class="bold svelte-rxubrt">k</span> =`;
+    			h34.innerHTML = `integer <span class="bold svelte-1igd3ky">k</span> =`;
     			t27 = space();
     			input2 = element("input");
     			t28 = space();
     			button = element("button");
     			button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><use href="#function-svg"></use></svg>`;
-    			t29 = space();
-    			div3 = element("div");
-    			attr(h20, "class", "svelte-rxubrt");
+    			attr(h20, "class", "svelte-1igd3ky");
     			attr(input0, "type", "checkbox");
-    			attr(h30, "class", "svelte-rxubrt");
-    			attr(h31, "class", "svelte-rxubrt");
-    			attr(h32, "class", "svelte-rxubrt");
-    			attr(div0, "class", "centering-col svelte-rxubrt");
-    			attr(h21, "class", "svelte-rxubrt");
-    			attr(h33, "class", "svelte-rxubrt");
+    			attr(h30, "class", "svelte-1igd3ky");
+    			attr(h31, "class", "svelte-1igd3ky");
+    			attr(h32, "class", "svelte-1igd3ky");
+    			attr(div0, "class", "centering-col svelte-1igd3ky");
+    			attr(h21, "class", "svelte-1igd3ky");
+    			attr(h33, "class", "svelte-1igd3ky");
     			attr(input1, "type", "number");
-    			input1.value = input1_value_value = /*otherVars*/ ctx[1].r;
+    			input1.value = input1_value_value = /*otherVars*/ ctx[0].r;
     			attr(input1, "step", "0.01");
-    			attr(input1, "class", "svelte-rxubrt");
-    			attr(h34, "class", "svelte-rxubrt");
+    			attr(input1, "class", "svelte-1igd3ky");
+    			attr(h34, "class", "svelte-1igd3ky");
     			attr(input2, "type", "number");
-    			input2.value = input2_value_value = /*otherVars*/ ctx[1].k;
+    			input2.value = input2_value_value = /*otherVars*/ ctx[0].k;
     			attr(input2, "step", "1");
-    			attr(input2, "class", "svelte-rxubrt");
-    			attr(div1, "class", "aligned svelte-rxubrt");
-    			attr(div2, "class", "container svelte-rxubrt");
-    			toggle_class(div2, "show", /*show*/ ctx[0]);
-    			attr(button, "class", "toggle-btn svelte-rxubrt");
-    			attr(div3, "class", "overlay svelte-rxubrt");
-    			attr(div3, "title", "Click to close variables panel");
-    			toggle_class(div3, "show", /*show*/ ctx[0]);
+    			attr(input2, "class", "svelte-1igd3ky");
+    			attr(div1, "class", "aligned svelte-1igd3ky");
+    			attr(div2, "class", "container svelte-1igd3ky");
+    			toggle_class(div2, "show", /*show*/ ctx[1]);
+    			attr(button, "class", "toggle-btn svelte-1igd3ky");
     		},
     		m(target, anchor) {
     			insert(target, div2, anchor);
@@ -2557,37 +2566,30 @@ var app = (function () {
     			append(div1, input2);
     			insert(target, t28, anchor);
     			insert(target, button, anchor);
-    			insert(target, t29, anchor);
-    			insert(target, div3, anchor);
     			current = true;
 
     			if (!mounted) {
     				dispose = [
     					listen(input0, "change", /*change_handler*/ ctx[3]),
     					listen(input1, "change", /*change_handler_1*/ ctx[4]),
-    					listen(input2, "change", /*changek*/ ctx[2]),
-    					listen(button, "click", /*click_handler*/ ctx[5]),
-    					listen(div3, "click", /*click_handler_1*/ ctx[6])
+    					listen(input2, "change", /*change_k*/ ctx[2]),
+    					listen(button, "click", /*click_handler*/ ctx[5])
     				];
 
     				mounted = true;
     			}
     		},
     		p(ctx, [dirty]) {
-    			if (!current || dirty & /*otherVars*/ 2 && input1_value_value !== (input1_value_value = /*otherVars*/ ctx[1].r)) {
+    			if (!current || dirty & /*otherVars*/ 1 && input1_value_value !== (input1_value_value = /*otherVars*/ ctx[0].r)) {
     				input1.value = input1_value_value;
     			}
 
-    			if (!current || dirty & /*otherVars*/ 2 && input2_value_value !== (input2_value_value = /*otherVars*/ ctx[1].k)) {
+    			if (!current || dirty & /*otherVars*/ 1 && input2_value_value !== (input2_value_value = /*otherVars*/ ctx[0].k)) {
     				input2.value = input2_value_value;
     			}
 
-    			if (dirty & /*show*/ 1) {
-    				toggle_class(div2, "show", /*show*/ ctx[0]);
-    			}
-
-    			if (dirty & /*show*/ 1) {
-    				toggle_class(div3, "show", /*show*/ ctx[0]);
+    			if (dirty & /*show*/ 2) {
+    				toggle_class(div2, "show", /*show*/ ctx[1]);
     			}
     		},
     		i(local) {
@@ -2613,8 +2615,6 @@ var app = (function () {
     			destroy_component(complexinput2);
     			if (detaching) detach(t28);
     			if (detaching) detach(button);
-    			if (detaching) detach(t29);
-    			if (detaching) detach(div3);
     			mounted = false;
     			run_all(dispose);
     		}
@@ -2625,33 +2625,17 @@ var app = (function () {
     	let show = false;
 
     	/**@param {Event} e*/
-    	function changek(e) {
+    	function change_k(e) {
     		const t = e.target;
     		let v = Number(t.value);
     		if (Number.isNaN(v)) t.value = v = 0; else if (!Number.isInteger(v)) t.value = v = Math.round(v);
-    		$$invalidate(1, otherVars.k = v, otherVars);
+    		$$invalidate(0, otherVars.k = v, otherVars);
     	}
 
     	const change_handler = e => deg.set(e.target.checked);
-    	const change_handler_1 = e => $$invalidate(1, otherVars.r = parseFloat(e.target.value), otherVars);
-    	const click_handler = () => $$invalidate(0, show = !show);
-    	const click_handler_1 = () => $$invalidate(0, show = false);
-
-    	$$self.$$.update = () => {
-    		if ($$self.$$.dirty & /*show*/ 1) {
-    			suspend(show);
-    		}
-    	};
-
-    	return [
-    		show,
-    		otherVars,
-    		changek,
-    		change_handler,
-    		change_handler_1,
-    		click_handler,
-    		click_handler_1
-    	];
+    	const change_handler_1 = e => $$invalidate(0, otherVars.r = parseFloat(e.target.value), otherVars);
+    	const click_handler = () => $$invalidate(1, show = !show);
+    	return [otherVars, show, change_k, change_handler, change_handler_1, click_handler];
     }
 
     class VarsMenu extends SvelteComponent {

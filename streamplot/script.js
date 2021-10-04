@@ -460,6 +460,18 @@ var app = (function () {
             this.imag = i;
             return this;
         }
+        intoSine() {
+            var i = Math.cos(this.real)*Math.sinh(this.imag);
+            this.real = Math.sin(this.imag)*Math.cosh(this.real);
+            this.imag = i;
+            return this;
+        }
+        intoCosine() {
+            var i = -Math.sin(this.real)*Math.sinh(this.imag);
+            this.real = Math.cos(this.real)*Math.cosh(this.imag);
+            this.imag = i;
+            return this;
+        }
         toOne() {
             this.real = 1;
             this.imag = 0;
@@ -481,15 +493,15 @@ var app = (function () {
             return this;
         }
         toString() {
-            if(this.real == 0) return this.imag ? nf(this.imag)+'i' : '0';
-            if(this.imag == 0) return nf(this.real);
-            let r = ['(', nf(this.real)];
+            if(this.real == 0) return this.imag ? nf$1(this.imag)+'i' : '0';
+            if(this.imag == 0) return nf$1(this.real);
+            let r = ['(', nf$1(this.real)];
             if(this.imag > 0) {
                 if(this.imag === 1) r.push('+i)');
-                else r.push('+', nf(this.imag), 'i)');
+                else r.push('+', nf$1(this.imag), 'i)');
             } else {
                 if(this.imag === -1) r.push('-i)');
-                else r.push(nf(this.imag), 'i)');
+                else r.push(nf$1(this.imag), 'i)');
             }
             return r.join('');
         }
@@ -497,6 +509,7 @@ var app = (function () {
         static ModArg(mod, arg) { return new Complex$1(mod * Math.cos(arg), mod * Math.sin(arg)) }
     }
     window.Complex = Complex$1;
+    function nf$1(n) { return Number.isInteger(n) ? n.toString() : n.toPrecision(4) }
 
     const canvas_width = 900;
     const canvas_height = 600;
@@ -599,141 +612,6 @@ var app = (function () {
             };
         });
     }
-
-    var iv = Object.freeze({
-        gap: .12,
-        px_gap: 12,
-        clr_num: 7,
-        clr_factor: 4,
-        x_min: -3,
-        x_max: 3,
-        y_min: -2,
-        y_max: 2,
-        dt: 250,
-        life: 120,
-    });
-
-    const deg = writable(false);
-
-    const av_frame_time = writable('0.000');
-
-    /**
-     * @param {Number} v 
-     * @returns {import('svelte/store').Writable<Number>}
-     */
-    function writable_init(v) {
-        const res = writable(v);
-        Object.defineProperty(res, "initial", {value: v});
-        return res;
-    }
-
-    // function boundedIntValue(min, max, initial) {
-    //     let input, value = initial;
-    //     const { subscribe, set, update } = writable(initial);
-    //     function _set(v) {
-    //         if(input) input.value = v;
-    //         set(value = v);
-    //     }
-    //     return Object.freeze({
-    //         subscribe,
-    //         increment() { if(value < max) _set(value + 1) },
-    //         decrement() { if(value > min) _set(value - 1) },
-    //         reset() { _set(initial) },
-    //         /**@param {HTMLInputElement} node */
-    //         bindInput(node) {
-    //             input = node;
-    //             node.addEventListener('change', () => {
-    //                 let v = Number(node.value);
-    //                 if(Number.isNaN(v)) node.value = v = initial;
-    //                 else if(v < min) node.value = v = min;
-    //                 else if(v > max) node.value = v = max;
-    //                 else if(!Number.isInteger(v)) node.value = v = Math.round(v);
-    //                 set(v);
-    //             });
-    //         },
-    //         initial,
-    //     });
-    // }
-
-    const dt_e6 = writable_init(250);
-
-    const particle_life = writable_init(4);
-
-    const px_gap = writable_init(12);
-
-    const clr_num = writable_init(7);
-    const clr_factor = writable_init(4);
-
-    const clr_thresholds = derived([clr_num, clr_factor], ([n, f]) => {
-        const res = new Array(n+1);
-        for(var i=n; i >= 0; i--) res[i] = ( n / i - 1) * f;
-        return res;
-    });
-
-    const clr_strings = derived(clr_num, n => {
-        const res = new Array(n);
-        for(var i=0; i<n; i++) res[i] = `hsl(${i*240/n}, 55%, 55%)`;
-        return res;
-    });
-
-
-    function axis(i_min, i_max) {
-        const value = {min: i_min, max: i_max};
-        const { subscribe, set: _set } = writable(value);
-        return {
-            subscribe,
-            reset() {
-                value.min = i_min;
-                value.max = i_max;
-                _set(value);
-            },
-            set(min, max) {
-                value.min = min;
-                value.max = max;
-                _set(value);
-            },
-            shift(delta) {
-                value.min += delta;
-                value.max += delta;
-                _set(value);
-            },
-            multiply(factor) {
-                value.min *= factor;
-                value.max *= factor;
-                _set(value);
-            },
-            get min() {return value.min},
-            set min(v) {
-                if(!Number.isFinite(v)) return;
-                value.min = v;
-                _set(value);
-            },
-            get max() {return value.max},
-            set max(v) {
-                if(!Number.isFinite(v)) return;
-                value.max = v;
-                _set(value);
-            },
-            initial: Object.freeze({min: i_min, max: i_max}),
-        }
-    }
-
-    const xAxis = axis(iv.x_min, iv.x_max);
-    const yAxis = axis(iv.y_min, iv.y_max);
-
-    const scaleX = derived(xAxis, ({min, max}) => canvas_width / (max - min));
-    const scaleY = derived(yAxis, ({min, max}) => canvas_height / (max - min));
-
-    const initial_complexs = derived([px_gap, xAxis, yAxis], ([gap, x, y]) => {
-        const numX = Math.floor(canvas_width/gap);
-        const numY = Math.floor(canvas_height/gap);
-        const res = new Array(numX*numY);
-        let i, j;
-        for(i=0; i<numY; i++) 
-            for(j=0; j<numX; j++)
-                res[i*numX+j] = new Complex$1( j/numX*(x.max-x.min) + x.min, i/numY*(y.max-y.min) + y.min );
-        return res;
-    });
 
     class Complex {
         constructor(real=0, imag=0) {
@@ -856,6 +734,18 @@ var app = (function () {
             this.imag = i;
             return this;
         }
+        intoSine() {
+            var i = Math.cos(this.real)*Math.sinh(this.imag);
+            this.real = Math.sin(this.imag)*Math.cosh(this.real);
+            this.imag = i;
+            return this;
+        }
+        intoCosine() {
+            var i = -Math.sin(this.real)*Math.sinh(this.imag);
+            this.real = Math.cos(this.real)*Math.cosh(this.imag);
+            this.imag = i;
+            return this;
+        }
         toOne() {
             this.real = 1;
             this.imag = 0;
@@ -893,6 +783,123 @@ var app = (function () {
         static ModArg(mod, arg) { return new Complex(mod * Math.cos(arg), mod * Math.sin(arg)) }
     }
     window.Complex = Complex;
+    function nf(n) { return Number.isInteger(n) ? n.toString() : n.toPrecision(4) }
+
+    var iv = Object.freeze({
+        gap: .12,
+        px_gap: 12,
+        clr_num: 7,
+        clr_factor: 4,
+        x_min: -3,
+        x_max: 3,
+        y_min: -2,
+        y_max: 2,
+        dt: 250,
+        life: 120,
+    });
+
+    const deg = writable(false);
+
+    const av_frame_time = writable('0.000');
+
+    /**
+     * @param {Number} v 
+     * @returns {import('svelte/store').Writable<Number>}
+     */
+    function writable_init(v) {
+        const res = writable(v);
+        Object.defineProperty(res, "initial", {value: v});
+        return res;
+    }
+
+    const dt_e6 = writable_init(250);
+
+    const particle_life = writable_init(4);
+
+    const px_gap = writable_init(12);
+
+    const clr_num = writable_init(7);
+    const clr_factor = writable_init(0);
+
+    const clr_thresholds = derived([clr_num, clr_factor], ([n, f]) => {
+        const res = new Array(n+1), mul = Math.pow(100, f/10);
+        for(var i=n; i >= 0; i--) res[i] = ( n / i - 1) * mul;
+        return res;
+    });
+
+    const clr_strings = derived(clr_num, n => {
+        const res = new Array(n);
+        let hue;
+        for(var i=0; i<n; i++) {
+            // hue = i*240/(n-1);
+            // hue = i*i * 240 / ((n-1)*(n-1));
+            // hue = Math.pow(i/(n-1), 1.4) * 240;
+            // hue = i*240/(n-1) * Math.sin(i*Math.PI / (2*n-2));
+            hue = 240 * Math.pow(i/(n-1), .6) * Math.sin(i*Math.PI / (2*n-2));
+            res[i] = `hsl(${hue},55%,55%)`;
+        }
+        return res;
+    });
+
+
+    function axis(i_min, i_max) {
+        const value = {min: i_min, max: i_max};
+        const { subscribe, set: _set } = writable(value);
+        return {
+            subscribe,
+            reset() {
+                value.min = i_min;
+                value.max = i_max;
+                _set(value);
+            },
+            set(min, max) {
+                value.min = min;
+                value.max = max;
+                _set(value);
+            },
+            shift(delta) {
+                value.min += delta;
+                value.max += delta;
+                _set(value);
+            },
+            multiply(factor) {
+                value.min *= factor;
+                value.max *= factor;
+                _set(value);
+            },
+            get min() {return value.min},
+            set min(v) {
+                if(!Number.isFinite(v)) return;
+                value.min = v;
+                _set(value);
+            },
+            get max() {return value.max},
+            set max(v) {
+                if(!Number.isFinite(v)) return;
+                value.max = v;
+                _set(value);
+            },
+            initial: Object.freeze({min: i_min, max: i_max}),
+        }
+    }
+
+    const xAxis = axis(iv.x_min, iv.x_max);
+    const yAxis = axis(iv.y_min, iv.y_max);
+
+    const scaleX = derived(xAxis, ({min, max}) => canvas_width / (max - min));
+    const scaleY = derived(yAxis, ({min, max}) => canvas_height / (max - min));
+
+    const initial_complexs = derived([px_gap, xAxis, yAxis], ([gap, x, y]) => {
+        const numX = Math.floor(canvas_width/gap);
+        const numY = Math.floor(canvas_height/gap);
+        const res = new Array((numX+1)*(numY+1));
+        console.log(`Particle number: ${numX+1}\xd7${numY+1} = ${(numX+1)*(numY+1)}`);
+        let i, j;
+        for(i=0; i<=numY; i++) 
+            for(j=0; j<=numX; j++)
+                res[i*(numX+1)+j] = new Complex( j/numX*(x.max-x.min) + x.min, i/numY*(y.max-y.min) + y.min );
+        return res;
+    });
 
     const z1 = Complex.ReIm(-1, 1);
     const z2 = Complex.ModArg(2, Math.PI/4);
@@ -943,7 +950,7 @@ var app = (function () {
         if(!Number.isFinite(options.max)) throw Error("no valid max option");
         const max = options.max;
         if(!options.store) throw Error("No store");
-        if(!options.store.initial) throw Error("No initial value on store");
+        if(typeof options.store.initial !== "number") throw Error("No initial value on store");
         const store = options.store;
         const mustBeInt = options.mustBeInt == null ? false : Boolean(options.mustBeInt);
         node.min = min;
@@ -966,7 +973,7 @@ var app = (function () {
 
 
     let frame_request = null, suspended = false, /**@type {CanvasRenderingContext2D} */ ctx;
-    let i, t, start, time=0, counter = 0;
+    let i, t, time=0, counter = 0;
 
 
     let xMin, $scaleX, yMax, $scaleY;
@@ -976,7 +983,7 @@ var app = (function () {
     scaleY.subscribe(v => $scaleY = v);
 
     let $clr_thresholds = [], $clr_strings = [], $clr_num=10;
-    clr_thresholds.subscribe(v => $clr_thresholds = v);
+    clr_thresholds.subscribe(v => $clr_thresholds = v.map(t => t*t));
     clr_strings.subscribe(v => $clr_strings = v);
     clr_num.subscribe(v => $clr_num = v);
 
@@ -1000,7 +1007,7 @@ var app = (function () {
         lives = new Array(len);
         for(i=0; i<len; i++) lives[i] = Math.floor(Math.random()*maxLife);
         if(ctx) {
-            ctx.fillStyle = 'hsl(240, 6%, 15%)';
+            ctx.fillStyle = 'hsl(240,6%,15%)';
             ctx.fillRect(0, 0, canvas_width, canvas_height);
         }
     });
@@ -1014,11 +1021,6 @@ var app = (function () {
         ctx.fillRect(0, 0, canvas_width, canvas_height);
     }
 
-    function layer() {
-        ctx.fillStyle = 'hsla(240, 6%, 15%, .01)';
-        ctx.fillRect(0, 0, canvas_width, canvas_height);
-    }
-
     /**@param {Complex} c */
     function draw(c) {
         ctx.fillRect(
@@ -1029,12 +1031,13 @@ var app = (function () {
     }
 
     function frame() {
-        start = performance.now();
+        var start = performance.now();
         if(++counter > 300) {
             av_frame_time.set((time/counter).toFixed(3));
             time = counter = 0;
         }
-        layer();
+        ctx.fillStyle = 'hsla(240,6%,15%,.01)';
+        ctx.fillRect(0, 0, canvas_width, canvas_height);
         var temp;
         for(i=0; i<len; i++) {
             lives[i]++;
@@ -1046,13 +1049,13 @@ var app = (function () {
             speeds[i] = temp.real*temp.real + temp.imag*temp.imag;
             currents[i].add(temp.mul_r(dt));
         }
-        var tr_low, tr_high;
+        var low, high;
         for(t=0; t<$clr_num; t++) {
             ctx.fillStyle = $clr_strings[t];
-            tr_low = $clr_thresholds[t+1]*$clr_thresholds[t+1];
-            tr_high = $clr_thresholds[t]*$clr_thresholds[t];
+            low = $clr_thresholds[t+1];
+            high = $clr_thresholds[t];
             for(i=0; i<len; i++) {
-                if(speeds[i] < tr_high && speeds[i] >= tr_low)
+                if(speeds[i] < high && speeds[i] >= low)
                     draw(currents[i]);
             }
         }
@@ -1110,7 +1113,7 @@ var app = (function () {
     		c() {
     			div = element("div");
     			attr(div, "data-label", div_data_label_value = /*l*/ ctx[17]);
-    			attr(div, "class", "svelte-1bh3wae");
+    			attr(div, "class", "svelte-1wgwtn8");
     		},
     		m(target, anchor) {
     			insert(target, div, anchor);
@@ -1135,7 +1138,7 @@ var app = (function () {
     		c() {
     			div = element("div");
     			attr(div, "data-label", div_data_label_value = /*l*/ ctx[17]);
-    			attr(div, "class", "svelte-1bh3wae");
+    			attr(div, "class", "svelte-1wgwtn8");
     		},
     		m(target, anchor) {
     			insert(target, div, anchor);
@@ -1204,22 +1207,22 @@ var app = (function () {
 
     			attr(canvas, "width", canvas_width);
     			attr(canvas, "height", canvas_height);
-    			attr(canvas, "class", "svelte-1bh3wae");
-    			attr(div0, "class", "x-axis svelte-1bh3wae");
+    			attr(canvas, "class", "svelte-1wgwtn8");
+    			attr(div0, "class", "x-axis svelte-1wgwtn8");
 
     			attr(div0, "style", div0_style_value = /*xAxisTop*/ ctx[2] > 0 && /*xAxisTop*/ ctx[2] < canvas_height
     			? `top: ${/*xAxisTop*/ ctx[2]}px;`
     			: 'display: none');
 
-    			attr(div1, "class", "y-axis svelte-1bh3wae");
+    			attr(div1, "class", "y-axis svelte-1wgwtn8");
 
     			attr(div1, "style", div1_style_value = /*yAxisLeft*/ ctx[3] > 0 && /*yAxisLeft*/ ctx[3] < canvas_width
     			? `left: ${/*yAxisLeft*/ ctx[3]}px;`
     			: 'display: none');
 
-    			attr(div2, "class", "canvas-container svelte-1bh3wae");
-    			attr(div3, "class", "x-labels svelte-1bh3wae");
-    			attr(div4, "class", "y-labels svelte-1bh3wae");
+    			attr(div2, "class", "canvas-container svelte-1wgwtn8");
+    			attr(div3, "class", "x-labels svelte-1wgwtn8");
+    			attr(div4, "class", "y-labels svelte-1wgwtn8");
     		},
     		m(target, anchor) {
     			insert(target, div2, anchor);
@@ -1462,7 +1465,7 @@ var app = (function () {
     		c() {
     			div = element("div");
     			attr(div, "data-num", div_data_num_value = /*t*/ ctx[2].toPrecision(3));
-    			attr(div, "class", "svelte-71q2ns");
+    			attr(div, "class", "svelte-n0e2xn");
     		},
     		m(target, anchor) {
     			insert(target, div, anchor);
@@ -1501,10 +1504,10 @@ var app = (function () {
 
     			t = space();
     			div1 = element("div");
-    			attr(div0, "class", "labels svelte-71q2ns");
-    			attr(div1, "class", "bar svelte-71q2ns");
+    			attr(div0, "class", "labels svelte-n0e2xn");
+    			attr(div1, "class", "bar svelte-n0e2xn");
     			set_style(div1, "background", "linear-gradient(to bottom, " + /*gradient*/ ctx[0] + ")");
-    			attr(div2, "class", "container svelte-71q2ns");
+    			attr(div2, "class", "container svelte-n0e2xn");
     		},
     		m(target, anchor) {
     			insert(target, div2, anchor);
@@ -1817,7 +1820,12 @@ var app = (function () {
     					action_destroyer(forceBounds.call(null, input6, { min: 1, max: 2000, store: dt_e6 })),
     					action_destroyer(forceBounds.call(null, input7, { min: 1, max: 40, store: particle_life })),
     					action_destroyer(forceBounds.call(null, input8, { min: 2, max: 20, store: clr_num })),
-    					action_destroyer(forceBounds.call(null, input9, { min: 1, max: 200, store: clr_factor })),
+    					action_destroyer(forceBounds.call(null, input9, {
+    						min: -10,
+    						max: 10,
+    						store: clr_factor,
+    						mustBeInt: false
+    					})),
     					listen(button1, "click", /*click_handler*/ ctx[2])
     				];
 
@@ -1902,11 +1910,11 @@ var app = (function () {
                 fn: c => tm[0].eq(c).exp_n(otherVars.k),
             },
             {
-                label: 'x<sup>r</sup><sub>k</sub>',
+                label: '(x<sub>k</sub>)<sup>r</sup>',
                 fn: c => tm[0].eq(c).exp_r(otherVars.r, otherVars.k),
             },
             {
-                label: 'x<sup>z<sub>1</sub></sup><sub>k</sub>',
+                label: '(x<sub>k</sub>)<sup>z<sub>1</sub></sup>',
                 fn: c => tm[0].eq(c).exp(z1, otherVars.k),
             },
         ],
@@ -1928,12 +1936,20 @@ var app = (function () {
                 fn: c => tm[0].eq(c).mul(c).add(c).exponentiate(),
             },
             {
-                label: 'z<sub>1</sub><sup>x</sup>',
+                label: 'e<sup>(x<sub>k</sub>)<sup>r</sup></sup>',
+                fn: c => tm[0].eq(c).exp_r(otherVars.r, otherVars.k).exponentiate(),
+            },
+            {
+                label: '(z<sub>1, k</sub>)<sup>x</sup>',
                 fn: c => tm[0].eq(z1).exp(c, otherVars.k),
             },
             {
                 label: 'x<sup>3</sup>e<sup>x</sup>',
                 fn: c => tm[0].eq(c).exponentiate().mul$(c, c, c),
+            },
+            {
+                label: 'x<sup>r</sup>e<sup>x</sup>',
+                fn: c => tm[0].eq(c).exponentiate().mul(tm[1].eq(c).exp_r(otherVars.r)),
             },
         ],
         logarithms: [
@@ -1948,6 +1964,32 @@ var app = (function () {
             {
                 label: 'ln(x + z<sub>1</sub>)<sub>k</sub>',
                 fn: c => tm[0].eq(c).add(z1).logarize(otherVars.k),
+            },
+        ],
+        trigonometry: [
+            {
+                label: 'sin(x)',
+                fn: c => tm[0].eq(c).intoSine(),
+            },
+            {
+                label: 'cos(x)',
+                fn: c => tm[0].eq(c).intoCosine(),
+            },
+            {
+                label: 'sin(x + z<sub>1</sub>)',
+                fn: c => tm[0].eq(c).add(z1).intoSine(),
+            },
+            {
+                label: 'sin(z<sub>1</sub>x)',
+                fn: c => tm[0].eq(c).mul(z1).intoSine(),
+            },
+            {
+                label: 'cos(z<sub>1</sub>x)',
+                fn: c => tm[0].eq(c).mul(z1).intoCosine(),
+            },
+            {
+                label: 'z<sub>1</sub>sin(z<sub>2</sub>x)',
+                fn: c => tm[0].eq(c).add(z1).intoSine(),
             },
         ],
         miscellaneous: [
@@ -1998,7 +2040,7 @@ var app = (function () {
     	return {
     		c() {
     			div = element("div");
-    			attr(div, "class", "option svelte-1bf6d82");
+    			attr(div, "class", "option svelte-ikpdpr");
     		},
     		m(target, anchor) {
     			insert(target, div, anchor);
@@ -2045,7 +2087,7 @@ var app = (function () {
     			}
 
     			each_1_anchor = empty();
-    			attr(h3, "class", "svelte-1bf6d82");
+    			attr(h3, "class", "svelte-ikpdpr");
     		},
     		m(target, anchor) {
     			insert(target, h3, anchor);
@@ -2121,10 +2163,10 @@ var app = (function () {
     			}
 
     			html_tag.a = null;
-    			attr(button, "class", "svelte-1bf6d82");
-    			attr(div0, "class", "options svelte-1bf6d82");
+    			attr(button, "class", "svelte-ikpdpr");
+    			attr(div0, "class", "options svelte-ikpdpr");
     			attr(div0, "tabindex", "0");
-    			attr(div1, "class", "container svelte-1bf6d82");
+    			attr(div1, "class", "container svelte-ikpdpr");
     		},
     		m(target, anchor) {
     			insert(target, div1, anchor);
@@ -2421,7 +2463,7 @@ var app = (function () {
     /* svelte\VarsMenu.svelte generated by Svelte v3.43.0 */
 
     function create_fragment$1(ctx) {
-    	let div2;
+    	let div3;
     	let functionselect;
     	let t0;
     	let h20;
@@ -2456,7 +2498,7 @@ var app = (function () {
     	let input2;
     	let input2_value_value;
     	let t28;
-    	let button;
+    	let div2;
     	let current;
     	let mounted;
     	let dispose;
@@ -2467,7 +2509,7 @@ var app = (function () {
 
     	return {
     		c() {
-    			div2 = element("div");
+    			div3 = element("div");
     			create_component(functionselect.$$.fragment);
     			t0 = space();
     			h20 = element("h2");
@@ -2498,50 +2540,50 @@ var app = (function () {
     			t18 = space();
     			div1 = element("div");
     			h33 = element("h3");
-    			h33.innerHTML = `real <span class="bold svelte-1igd3ky">r</span> =`;
+    			h33.innerHTML = `real <span class="bold svelte-bgzft3">r</span> =`;
     			t22 = space();
     			input1 = element("input");
     			t23 = space();
     			h34 = element("h3");
-    			h34.innerHTML = `integer <span class="bold svelte-1igd3ky">k</span> =`;
+    			h34.innerHTML = `integer <span class="bold svelte-bgzft3">k</span> =`;
     			t27 = space();
     			input2 = element("input");
     			t28 = space();
-    			button = element("button");
-    			button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><use href="#function-svg"></use></svg>`;
-    			attr(h20, "class", "svelte-1igd3ky");
+    			div2 = element("div");
+    			div2.innerHTML = `z<sub>k</sub>, k ∈ ℤ ⇒ z ≡ |z| ∠ (atan2(z) + 2πk)`;
+    			attr(h20, "class", "svelte-bgzft3");
     			attr(input0, "type", "checkbox");
-    			attr(h30, "class", "svelte-1igd3ky");
-    			attr(h31, "class", "svelte-1igd3ky");
-    			attr(h32, "class", "svelte-1igd3ky");
-    			attr(div0, "class", "centering-col svelte-1igd3ky");
-    			attr(h21, "class", "svelte-1igd3ky");
-    			attr(h33, "class", "svelte-1igd3ky");
+    			attr(h30, "class", "svelte-bgzft3");
+    			attr(h31, "class", "svelte-bgzft3");
+    			attr(h32, "class", "svelte-bgzft3");
+    			attr(div0, "class", "centering-col svelte-bgzft3");
+    			attr(h21, "class", "svelte-bgzft3");
+    			attr(h33, "class", "svelte-bgzft3");
     			attr(input1, "type", "number");
     			input1.value = input1_value_value = /*otherVars*/ ctx[0].r;
     			attr(input1, "step", "0.01");
-    			attr(input1, "class", "svelte-1igd3ky");
-    			attr(h34, "class", "svelte-1igd3ky");
+    			attr(input1, "class", "svelte-bgzft3");
+    			attr(h34, "class", "svelte-bgzft3");
     			attr(input2, "type", "number");
     			input2.value = input2_value_value = /*otherVars*/ ctx[0].k;
     			attr(input2, "step", "1");
-    			attr(input2, "class", "svelte-1igd3ky");
-    			attr(div1, "class", "aligned svelte-1igd3ky");
-    			attr(div2, "class", "container svelte-1igd3ky");
-    			toggle_class(div2, "show", /*show*/ ctx[1]);
-    			attr(button, "class", "toggle-btn svelte-1igd3ky");
+    			attr(input2, "class", "svelte-bgzft3");
+    			attr(div1, "class", "aligned svelte-bgzft3");
+    			attr(div2, "class", "expl svelte-bgzft3");
+    			attr(div3, "class", "container svelte-bgzft3");
+    			toggle_class(div3, "show", show);
     		},
     		m(target, anchor) {
-    			insert(target, div2, anchor);
-    			mount_component(functionselect, div2, null);
-    			append(div2, t0);
-    			append(div2, h20);
-    			append(div2, t2);
-    			append(div2, label);
+    			insert(target, div3, anchor);
+    			mount_component(functionselect, div3, null);
+    			append(div3, t0);
+    			append(div3, h20);
+    			append(div3, t2);
+    			append(div3, label);
     			append(label, t3);
     			append(label, input0);
-    			append(div2, t4);
-    			append(div2, div0);
+    			append(div3, t4);
+    			append(div3, div0);
     			append(div0, h30);
     			append(div0, t7);
     			mount_component(complexinput0, div0, null);
@@ -2553,10 +2595,10 @@ var app = (function () {
     			append(div0, h32);
     			append(div0, t15);
     			mount_component(complexinput2, div0, null);
-    			append(div2, t16);
-    			append(div2, h21);
-    			append(div2, t18);
-    			append(div2, div1);
+    			append(div3, t16);
+    			append(div3, h21);
+    			append(div3, t18);
+    			append(div3, div1);
     			append(div1, h33);
     			append(div1, t22);
     			append(div1, input1);
@@ -2564,16 +2606,15 @@ var app = (function () {
     			append(div1, h34);
     			append(div1, t27);
     			append(div1, input2);
-    			insert(target, t28, anchor);
-    			insert(target, button, anchor);
+    			append(div3, t28);
+    			append(div3, div2);
     			current = true;
 
     			if (!mounted) {
     				dispose = [
-    					listen(input0, "change", /*change_handler*/ ctx[3]),
-    					listen(input1, "change", /*change_handler_1*/ ctx[4]),
-    					listen(input2, "change", /*change_k*/ ctx[2]),
-    					listen(button, "click", /*click_handler*/ ctx[5])
+    					listen(input0, "change", /*change_handler*/ ctx[2]),
+    					listen(input1, "change", /*change_handler_1*/ ctx[3]),
+    					listen(input2, "change", /*change_k*/ ctx[1])
     				];
 
     				mounted = true;
@@ -2586,10 +2627,6 @@ var app = (function () {
 
     			if (!current || dirty & /*otherVars*/ 1 && input2_value_value !== (input2_value_value = /*otherVars*/ ctx[0].k)) {
     				input2.value = input2_value_value;
-    			}
-
-    			if (dirty & /*show*/ 2) {
-    				toggle_class(div2, "show", /*show*/ ctx[1]);
     			}
     		},
     		i(local) {
@@ -2608,23 +2645,20 @@ var app = (function () {
     			current = false;
     		},
     		d(detaching) {
-    			if (detaching) detach(div2);
+    			if (detaching) detach(div3);
     			destroy_component(functionselect);
     			destroy_component(complexinput0);
     			destroy_component(complexinput1);
     			destroy_component(complexinput2);
-    			if (detaching) detach(t28);
-    			if (detaching) detach(button);
     			mounted = false;
     			run_all(dispose);
     		}
     	};
     }
 
-    function instance$1($$self, $$props, $$invalidate) {
-    	let show = false;
+    let show = false;
 
-    	/**@param {Event} e*/
+    function instance$1($$self, $$props, $$invalidate) {
     	function change_k(e) {
     		const t = e.target;
     		let v = Number(t.value);
@@ -2634,8 +2668,7 @@ var app = (function () {
 
     	const change_handler = e => deg.set(e.target.checked);
     	const change_handler_1 = e => $$invalidate(0, otherVars.r = parseFloat(e.target.value), otherVars);
-    	const click_handler = () => $$invalidate(1, show = !show);
-    	return [otherVars, show, change_k, change_handler, change_handler_1, click_handler];
+    	return [otherVars, change_k, change_handler, change_handler_1];
     }
 
     class VarsMenu extends SvelteComponent {
@@ -2685,8 +2718,8 @@ var app = (function () {
     			div = element("div");
     			t6 = text(/*$av_frame_time*/ ctx[0]);
     			t7 = text(" ms");
-    			attr(button, "class", "svelte-1adx9jo");
-    			attr(div, "class", "time svelte-1adx9jo");
+    			attr(button, "class", "svelte-umd3kl");
+    			attr(div, "class", "time svelte-umd3kl");
     		},
     		m(target, anchor) {
     			mount_component(canvas, target, anchor);

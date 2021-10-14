@@ -35,7 +35,7 @@
             </ul>
         </div>
         <div>
-            <img class="center" src="./assets/streamplot-gif-preview.gif" alt="Preview of a streamplot">
+            <img class="center" id="streamplot-gif" src="" alt="Preview of a streamplot">
             <p>
                 Currently, two version of the streamplot are available and still work in progress.
                 If you have any suggestions or reports on issues or bugs, feel free to contact me.
@@ -83,5 +83,11 @@
     </footer>
 
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script>
+        document.onreadystatechange = function() {
+            if(document.readyState !== "complete") return;
+            document.getElementById('streamplot-gif').src = "./assets/streamplot-gif-preview.gif";
+        }
+    </script>
 </body>
 </html>

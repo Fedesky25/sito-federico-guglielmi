@@ -15,9 +15,9 @@
         <h2>Streamplot of complex functions</h2>
         <div>
             <p>
-                Starting from a grid of particle of position \(x \in \mathbb{C}\),
+                Starting from a grid of particles of position \(x \in \mathbb{C}\),
                 each of them is animated according to a complex function \(f(x)\) which is considered their instantaneous velocity.
-                For each frame all particles move and end up in a new position, which in turn will define the istantaneous velocity
+                For each frame, all particles move and end up in a new position, which in turn will define the istantaneous velocity
                 in the following frame. If a sufficiently small \(dx\) of displacement is taken, the animation accurately depicts
                 the motion direction of many particles inside the vector field defined by \(f\).
             </p>
@@ -26,19 +26,19 @@
             </p>
             <ul>
                 <li>Select a function \(f\) among many;</li>
-                <li>Set the value of some numerical values (complex, real, and natutal);</li>
+                <li>Set numerical values appearing in the function definitions;</li>
                 <li>Pan and zoom in/out the viewbox;</li>
                 <li>Choose the pixel gap between the particle initial positions;</li>
-                <li>Choose the particle life in frames;</li>
-                <li>Number of colors (which stand for the velocity magnitude);</li>
-                <li>Color factor to increase or decrease the speeds thresholds;</li>
+                <li>Set the particle life (animation loop duration in frames);</li>
+                <li>Set the number of colors (representing the speed);</li>
+                <li>Increase or decrease the speeds-for-colors thresholds;</li>
             </ul>
         </div>
         <div>
             <img class="center" id="streamplot-gif" src="" alt="Preview of a streamplot">
             <p>
                 Currently, two version of the streamplot are available and still work in progress.
-                If you have any suggestions or reports on issues or bugs, feel free to contact me.
+                If you have any suggestions or reports on issues and bugs, feel free to contact me.
             </p>
             <ol>
                 <li>
@@ -59,7 +59,7 @@
         <div>
             <p>
                 Chosen \(0 \lt n \in \mathbb{N}\), a polynomial of degree \(n\), with its complex roots, is considered. 
-                The Guassian plane is colored based on the exact root closest to the \(m\)-th iteration of the Newton's method which as has a starting position each \(z \in \mathbb{C}\) visible in the viewbox.
+                The Guassian plane is colored based on the exact root closest to the \(m\)-th iteration of the Newton's method applied at each \(z \in \mathbb{C}\) visible in the viewbox.
             </p>
             <p>
                 Still work in progress...

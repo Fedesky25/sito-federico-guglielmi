@@ -158,12 +158,17 @@ footer {
     overflow-x: hidden;
     overflow-y: visible;
 }
-footer::after {
+footer > * {
+    position: relative;
+    z-index: 2;
+}
+footer::before {
     content: 'by F. Guglielmi';
     position: absolute;
     bottom: 0;
     left: 18rem;
     right: .4ch;
+    z-index: 1;
     font-size: 12rem;
     font-weight: 500;
     white-space: nowrap;
@@ -171,13 +176,12 @@ footer::after {
     opacity: .1;
 }
 @media (max-width: 100ch) {
-    footer::after {
+    footer::before {
         content: 'F. Guglielmi';
         left: 100%;
         bottom: .2rem;
         transform-origin: bottom left;
         transform: rotate(-90deg) translateX(.5rem);
-        z-index: 100;
         font-size: 3.5rem;
     }
 }

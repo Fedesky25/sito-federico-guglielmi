@@ -1756,6 +1756,9 @@ var app = (function () {
     plotFrames.subscribe(v => {
         clrs = v.clrs;
         frames = v.frames;
+        if(!ctx) return;
+        ctx.fillStyle = 'hsl(240, 6%, 15%)';
+        ctx.fillRect(0, 0, 900, 600);
     });
 
 
@@ -1779,9 +1782,11 @@ var app = (function () {
         var i, c;
         for(c=frame.length-1; c>=0; c--) {
             ctx.fillStyle = clrs[c];
+            ctx.beginPath();
             for(i=frame[c].length-1; i>=0; i--) {
-                ctx.fillRect(frame[c][i].x-.5, frame[c][i].y-.5, 1, 1);
+                ctx.rect(frame[c][i].x-.5, frame[c][i].y-.5, 1, 1);
             }
+            ctx.fill();
         }
         frame_index++;
         frame_request = requestAnimationFrame(draw);
@@ -2434,6 +2439,8 @@ var app = (function () {
     }
 
     function bounds(node, options) {
+    	node.min = options.min;
+    	node.max = options.max;
     	node.value = options.store.initial;
 
     	function change() {

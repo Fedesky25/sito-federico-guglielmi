@@ -5,3 +5,11 @@
 [[redirects]]
     from = "/wave-transmission"
     to = "/wave-transmission-coefficient"
+
+[[redirects]]
+    from = "/translation-tool"
+    to = "json-translation-tool"
+
+[[redirects]]
+    from = "/json-translation"
+    to = "json-translation-tool"

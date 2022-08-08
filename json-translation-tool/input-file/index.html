@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        input[type="text"].short {
+            width: 20ch;
+        }
+        #confirm:disabled {
+            display: none;
+        }
+        #downloads {
+            display: flex;
+            flex-direction: column;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <form class="hideable" id="project">
+        <fieldset>
+            <legend>Project</legend>
+            <input type="file" webkitdirectory>
+        </fieldset>
+        <button type="submit">Load</button>
+    </form>
+
+    <form class="hidden" id="selection">
+        <fieldset>
+            <legend>Folder</legend>
+            <select id="folder" name="folder"></select>
+        </fieldset>
+        <fieldset id="languages">
+            <legend>Lingue</legend>
+        </fieldset>
+        <button type="submit">Edit</button>
+    </form>
+
+    <div id="grid"></div>
+    <button id="confirm" type="button" disabled>Confirm</button>
+    <div id="results" class="hidden">
+        <h3>Download the files</h3>
+        <div id="downloads"></div>
+        <button type="button" id="back">Back</button>
+    </div>
+    <script src="./script.js" defer></script>
+</body>
+</html>

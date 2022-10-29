@@ -1,0 +1,3 @@
+[submodule "tools/json-translation"]
+	path = tools/json-translation
+	url = https://github.com/Fedesky25/json-translation-tool.git

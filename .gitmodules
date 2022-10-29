@@ -1,3 +1,6 @@
 [submodule "tools/json-translation"]
 	path = tools/json-translation
 	url = https://github.com/Fedesky25/json-translation-tool.git
+[submodule "tools/encrypted-messages"]
+	path = tools/encrypted-messages
+	url = https://github.com/Fedesky25/encrypted-messages.git

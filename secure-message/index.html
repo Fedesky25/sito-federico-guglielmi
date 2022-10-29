@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="prefetch" href="./out-box.css" />
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Source+Code+Pro:ital,wght@0,400;1,500&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body {
+            background-color: #fbfbfb;
+            padding: 1rem;
+            padding-top: 3rem;
+        }
+        .grid {
+            max-width: 55ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (max-width: 59.99rem) {
+            .grid > :last-child {
+                margin-top: 5rem;
+            }
+        }
+        @media (min-width: 60rem) {
+            body {
+                padding: 3rem;
+            }
+            .grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 5rem;
+                max-width: 110ch;
+            }
+        }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 0;
+        }
+        h3 {
+            margin-top: 2rem;
+            margin-bottom: .5rem;
+        }
+        .hide {
+            display: none;
+        }
+        textarea {
+            border: 0;
+            resize: none;
+            overflow-y: hidden;
+            width: 100%;
+            border-left: 3px solid cadetblue;
+            padding: .6rem 1.1rem;
+            border-top-right-radius: .7rem;
+            border-bottom-right-radius: .7rem;
+            box-shadow: 0 0 .5rem #5552;
+            min-height: 6rem;
+        }
+        textarea:focus-visible {
+            box-shadow: 0 0 .5rem rgba(95, 158, 160, 0.3);
+            outline: none;
+        }
+        .break {
+            overflow-wrap: break-word;
+            word-break: break-all;
+        }
+        form {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            margin-bottom: 2rem;
+        }
+        input {
+            font-size: 1rem;
+        }
+        .btn {
+            background-color: cadetblue;
+            padding: .4rem .8rem;
+            border: 0;
+            margin-top: 1rem;
+            color: white;
+            font-size: 1rem;
+            border-radius: .2rem;
+            cursor: pointer;
+        }
+        input[type="text"] {
+            background-color: inherit;
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid cadetblue;
+            padding: .6rem 1.1rem;
+        }
+        input[type="text"]:focus-visible {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <div>
+            <h2>Receiving</h2>
+            <button class="btn" id="start-receiving">Start receiving</button>
+            <div id="receiving" class="hide">
+                <h3>Public key</h3>
+                <out-box break id="gen-key"></out-box>
+                <h3>Received message</h3>
+                <form id="form-receiver">
+                    <input type="text" name="message">
+                </form>
+                <out-box id="decrypted"></out-box>
+            </div>
+        </div>
+        <div>
+            <h2>Sending</h2>
+            <h3>Public key</h3>
+            <form id="import-key">
+                <textarea class="break" rows="8"></textarea>
+                <button class="btn">Set key</button>
+            </form>
+            <div class="hide">
+                <h3>Message to be sent</h3>
+                <form id="form-sender">
+                    <textarea class="message" name="message" id="sender-message" rows="3"></textarea>
+                    <button class="btn">Encrypt</button>
+                </form>
+                <out-box break id="encrypted"></out-box>
+            </div>
+        </div>
+    </div>
+    <template id="out-box">
+        <div class="out-box">
+            <div class="out-box__text"></div>
+            <button class="out-box__btn" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                    <rect width="64" height="64" fill="white" />
+                    <rect x="4" y="4" width="34" height="34" rx="5" ry="5" fill="none" stroke="black" stroke-width="3" />
+                    <rect x="10" y="10" width="34" height="34" rx="5" ry="5" fill="white" stroke="black" stroke-width="3" />
+                </svg>
+            </button>
+        </div>
+    </template>
+    <script src="./script.js"></script>
+</body>
+</html>

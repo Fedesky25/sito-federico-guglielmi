@@ -1,0 +1,32 @@
+.wrapper {position: relative;}
+.text {
+    background-color: #eee;
+    border-radius: .7rem;
+    padding: .6rem 1.1rem;
+    max-width: 100%;
+    min-height: 4rem;
+}
+.break {
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
+button {
+    background-color: #eee;
+    border-radius: .5rem;
+    border: 2px solid #ccc;
+    transition: transform .15s ease;
+    padding: .3rem;
+    cursor: pointer;
+
+    position: absolute;
+    bottom: -.7rem;
+    right: -.7rem;
+}
+button:active {
+    transform: scale(1.2);
+}
+svg {
+    width: 1.7rem;
+    height: 1.7rem;
+    display: block;
+}

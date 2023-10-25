@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Web Dev</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <main>
+        <h1>HTML & CSS questions</h1>
+        <section>
+            <h2>Aligning children</h2>
+            <p>Given a container (CSS class <code>aligner</code>) with an arbitrary number of children, modify its CSS class such that its children are aligned vertically and with equal space between.</p>
+            <label>Number of children: <input type="range" min="3" max="8" value="4" data-align="input"> <span data-align="text">3</span></label>
+            <h3>Expected result</h3>
+            <div class="outlined m-b true-1" data-align="container"></div>
+            <h3>Your code</h3>
+            <style class="code-block" contenteditable="true">.aligner {
+    /* edit style */
+}</style>
+            <div class="outlined m-b aligner" data-align="container"></div>
+        </section>
+        <section>
+            <h2>Responsive alignment</h2>
+            <div>
+                <p>Design a container with CSS class <code>responsive</code> &ndash; such as the one below &ndash; which alignes its children to the right, and:</p> 
+                <ul>
+                    <li>If the screen is narrower than <code>32rem</code>, it stacks them vertically, i.e. one below the other;</li>
+                    <li>Otherwise, it stacks them horizontally (i.e. one on the right of the other), centers them vertically, and allows them to wrap if too many are present and don't fit in the width.</li>
+                </ul>
+            </div>
+            <label>Number of children: <input type="range" min="2" max="10" value="3" data-responsive="input"> <span data-responsive="text">3</span></label>
+            <h3>Expected result</h3>
+            <div class="outlined responsive-true" data-responsive="container">
+            </div>
+            <h3>Your code</h3>
+            <style class="code-block" contenteditable="true">.responsive {
+    /* edit style */
+}
+/* style outside too? */</style>
+            <div class="outlined responsive" data-responsive="container"></div>
+
+            <script>
+            </script>
+        </section>
+        <section>
+            <h2>Grids and tables</h2>
+            <p>Given some elements to organize in columns and/or rows, how would you approach this task? Would you use tables? What about the gap?</p>
+            <h3>Case 1</h3>
+            <div class="outlined grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="rect">Card #1</div>
+                <div class="rect">Card #2</div>
+                <div class="rect">Card #3</div>
+                <div class="rect">Card #4</div>
+                <div class="rect">Card #5</div>
+                <div class="rect">Card #6</div>
+            </div>
+            <h3>Case 2</h3>
+            <table class="outlined table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price (€)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pants</td>
+                        <td>2</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>T-shirt</td>
+                        <td>3</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>Shoes</td>
+                        <td>1</td>
+                        <td>60</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Case 3</h3>
+            <div class="outlined grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+                <div class="rect">1</div>
+                <div class="rect">2</div>
+            </div>
+            <h3>Case 4</h3>
+            <div class="outlined grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem;">
+                <div class="rect" style="grid-row: 1; grid-column: 3;">1</div>
+                <div class="rect" style="grid-row: 1/3; grid-column: 2;">2</div>
+                <div class="rect" style="grid-row: 2; grid-column: 1;">3</div>
+                <div class="rect" style="grid-row: 3; grid-column: 2;">4</div>
+            </div>
+        </section>
+        <section>
+            <h2>CSS variables</h2>
+            <pre class="code-block">.class[attribute] {
+    color: rgba(var(--accent-rgb), 0.8);
+    border-radius: var(--radius, .5rem);
+}</pre>
+        </section>
+        <section>
+            <h2>Input formatting</h2>
+            <p>While the user inputs an integer number, format its text value according to the locale language.</p>
+            <input type="text" id="test-4">
+        </section>
+        <section>
+            <h2>HTML & CSS only trick</h2>
+            <p>Using only CSS obtain the following: when the user click on an element the style of another one change its style.</p>
+            <label class="btn-like" for="toggle-6">Click here as if I were a button</label>
+            <input type="checkbox" class="toggle-input" id="toggle-6">
+            <div class="square"></div>
+        </section>
+    </main>
+    <script src="./script.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding: max(1.5rem, 8vw) 1.5rem;
+}
+
+main {
+    max-width: 65ch;
+    margin: 0 auto;
+}
+h1 {
+    margin-bottom: 3rem;
+}
+code, .code-block {
+    font-family: monospace;
+    background-color: #f4f4f4;
+}
+code {
+    font-size: 1.05rem;
+    padding: .1rem .3rem;
+    border-radius: .2rem;
+}
+.code-block {
+    display: block;
+    padding: .6rem 1rem;
+    border-radius: .5rem;
+    white-space: pre;
+    font-size: 1.2rem;
+}
+
+section {margin-bottom: 6rem;}
+h3 {margin-top: 2rem;}
+section > * {margin-bottom: 1rem;}
+ul {padding-left: 2.5ch;}
+.outlined {
+    border: 2px solid #aaa;
+    padding: 1px;
+}
+.rect {
+    background-color: coral;
+    /* border-radius: .2rem; */
+    margin: .1rem;
+}
+.true-1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.responsive-true {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+@media (min-width: 32rem) {
+    .responsive-true {
+        flex-direction: row;
+        justify-content: end;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+}
+.grid > .rect {
+    text-align: center;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.table {
+    border-collapse: collapse;
+}
+.table td, 
+.table th {
+    padding: 0rem .4rem;
+}
+.table th {
+    border-bottom: 2px solid #ddd;
+}
+input[type="range"] {
+    vertical-align: middle;
+    margin-bottom: .15rem;
+}
+input[type="text"] {
+    border-radius: .4rem;
+    border: 2px solid #ddd;
+    padding: .4rem .8rem;
+    font-size: inherit;
+    width: 20ch;
+}
+input[type="text"]:focus {
+    border-color: coral;
+    outline: none;
+}
+
+.toggle-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+label.btn-like {
+    border: 2px solid #ccc;
+    padding: .3rem .6rem;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.toggle-input + div {
+    height: 8rem;
+    width: 8rem;
+    background-color: #ccc;
+    transition: background-color .25s ease;
+    border-radius: .2rem;
+}
+
+.toggle-input:checked + div {
+    background-color: coral;
+}

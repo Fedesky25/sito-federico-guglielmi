@@ -1,5 +1,4 @@
 <script lang="ts">
-    import "@fontsource/ibm-plex-mono";
     import { onMount } from "svelte";
 
     interface Props {

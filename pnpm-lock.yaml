@@ -8,25 +8,22 @@ importers:
 
   .:
     dependencies:
-      '@fontsource-variable/merriweather':
-        specifier: ^5.2.3
-        version: 5.2.3
       '@fontsource-variable/outfit':
         specifier: ^5.2.5
         version: 5.2.5
       '@fontsource/allura':
         specifier: ^5.2.5
         version: 5.2.5
-      '@fontsource/ibm-plex-mono':
-        specifier: ^5.2.5
-        version: 5.2.5
       '@fontsource/old-standard-tt':
         specifier: ^5.2.5
         version: 5.2.5
     devDependencies:
-      '@sveltejs/adapter-auto':
-        specifier: ^6.0.0
-        version: 6.0.1(@sveltejs/kit@2.21.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.33.14)(vite@6.3.5))(svelte@5.33.14)(vite@6.3.5))
+      '@sveltejs/adapter-netlify':
+        specifier: ^5.0.2
+        version: 5.0.2(@sveltejs/kit@2.21.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.33.14)(vite@6.3.5))(svelte@5.33.14)(vite@6.3.5))
+      '@sveltejs/adapter-static':
+        specifier: ^3.0.8
+        version: 3.0.8(@sveltejs/kit@2.21.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.33.14)(vite@6.3.5))(svelte@5.33.14)(vite@6.3.5))
       '@sveltejs/kit':
         specifier: ^2.16.0
         version: 2.21.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.33.14)(vite@6.3.5))(svelte@5.33.14)(vite@6.3.5)
@@ -202,20 +199,17 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@fontsource-variable/merriweather@5.2.3':
-    resolution: {integrity: sha512-679e/kqRbSeLoF/sWNPcZZo5F59F0C3Q1zL6P7GDg3oxg//2UBN0+JU9umOHfN7vjJLGCr/WklaTbA+5mXvPFA==}
-
   '@fontsource-variable/outfit@5.2.5':
     resolution: {integrity: sha512-MejrIp6Cbmd3u5AZtsot8kmhZiyQM5CATsdcBB2hktYIrv5CVekRSUmFDXL4FpF7K70IvFp2ZMfImm5VhnVf7Q==}
 
   '@fontsource/allura@5.2.5':
     resolution: {integrity: sha512-X1T876+BXXyFmfJ9zjYk5rO+A1X4XIw6mmiXauhMJaKpqM++K1X0YuS4m82jWDKCdBxckIWy3hhJWvBmNzIHNw==}
 
-  '@fontsource/ibm-plex-mono@5.2.5':
-    resolution: {integrity: sha512-G09N3GfuT9qj3Ax2FDZvKqZttzM3v+cco2l8uXamhKyXLdmlaUDH5o88/C3vtTHj2oT7yRKsvxz9F+BXbWKMYA==}
-
   '@fontsource/old-standard-tt@5.2.5':
     resolution: {integrity: sha512-QBeO1KBnP2m0y4d24PqKxfNEg5zPCg2c1LLMpA4DYc3z4hvziyZMS/oacXisLiHzpFPXrFjivmcBF7Na1kAAuQ==}
+
+  '@iarna/toml@2.2.5':
+    resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
 
   '@jridgewell/gen-mapping@0.3.8':
     resolution: {integrity: sha512-imAbBGkb+ebQyxKgzv5Hu2nmROxoDOXHh80evxdoXNOrvAnVx7zimzc1Oo5h9RlfV4vPXaE2iM5pOFbvOCClWA==}
@@ -343,8 +337,13 @@ packages:
     peerDependencies:
       acorn: ^8.9.0
 
-  '@sveltejs/adapter-auto@6.0.1':
-    resolution: {integrity: sha512-mcWud3pYGPWM2Pphdj8G9Qiq24nZ8L4LB7coCUckUEy5Y7wOWGJ/enaZ4AtJTcSm5dNK1rIkBRoqt+ae4zlxcQ==}
+  '@sveltejs/adapter-netlify@5.0.2':
+    resolution: {integrity: sha512-iW1mZog3WopP0oBvl155qML8/+K8ejgVFj9ZVIdaP02pGDHAvYXbAUrLvAZTdzRnXYb/VYvQsQp2v9UJuEk3cA==}
+    peerDependencies:
+      '@sveltejs/kit': ^2.4.0
+
+  '@sveltejs/adapter-static@3.0.8':
+    resolution: {integrity: sha512-YaDrquRpZwfcXbnlDsSrBQNCChVOT9MGuSg+dMAyfsAa1SmiAhrA5jUYUiIMC59G92kIbY/AaQOWcBdq+lh+zg==}
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
 
@@ -665,15 +664,13 @@ snapshots:
   '@esbuild/win32-x64@0.25.5':
     optional: true
 
-  '@fontsource-variable/merriweather@5.2.3': {}
-
   '@fontsource-variable/outfit@5.2.5': {}
 
   '@fontsource/allura@5.2.5': {}
 
-  '@fontsource/ibm-plex-mono@5.2.5': {}
-
   '@fontsource/old-standard-tt@5.2.5': {}
+
+  '@iarna/toml@2.2.5': {}
 
   '@jridgewell/gen-mapping@0.3.8':
     dependencies:
@@ -758,7 +755,14 @@ snapshots:
     dependencies:
       acorn: 8.14.1
 
-  '@sveltejs/adapter-auto@6.0.1(@sveltejs/kit@2.21.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.33.14)(vite@6.3.5))(svelte@5.33.14)(vite@6.3.5))':
+  '@sveltejs/adapter-netlify@5.0.2(@sveltejs/kit@2.21.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.33.14)(vite@6.3.5))(svelte@5.33.14)(vite@6.3.5))':
+    dependencies:
+      '@iarna/toml': 2.2.5
+      '@sveltejs/kit': 2.21.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.33.14)(vite@6.3.5))(svelte@5.33.14)(vite@6.3.5)
+      esbuild: 0.25.5
+      set-cookie-parser: 2.7.1
+
+  '@sveltejs/adapter-static@3.0.8(@sveltejs/kit@2.21.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.33.14)(vite@6.3.5))(svelte@5.33.14)(vite@6.3.5))':
     dependencies:
       '@sveltejs/kit': 2.21.1(@sveltejs/vite-plugin-svelte@5.0.3(svelte@5.33.14)(vite@6.3.5))(svelte@5.33.14)(vite@6.3.5)
 

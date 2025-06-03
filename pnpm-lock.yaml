@@ -7,6 +7,22 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@fontsource-variable/merriweather':
+        specifier: ^5.2.3
+        version: 5.2.3
+      '@fontsource-variable/outfit':
+        specifier: ^5.2.5
+        version: 5.2.5
+      '@fontsource/allura':
+        specifier: ^5.2.5
+        version: 5.2.5
+      '@fontsource/ibm-plex-mono':
+        specifier: ^5.2.5
+        version: 5.2.5
+      '@fontsource/old-standard-tt':
+        specifier: ^5.2.5
+        version: 5.2.5
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^6.0.0
@@ -185,6 +201,21 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource-variable/merriweather@5.2.3':
+    resolution: {integrity: sha512-679e/kqRbSeLoF/sWNPcZZo5F59F0C3Q1zL6P7GDg3oxg//2UBN0+JU9umOHfN7vjJLGCr/WklaTbA+5mXvPFA==}
+
+  '@fontsource-variable/outfit@5.2.5':
+    resolution: {integrity: sha512-MejrIp6Cbmd3u5AZtsot8kmhZiyQM5CATsdcBB2hktYIrv5CVekRSUmFDXL4FpF7K70IvFp2ZMfImm5VhnVf7Q==}
+
+  '@fontsource/allura@5.2.5':
+    resolution: {integrity: sha512-X1T876+BXXyFmfJ9zjYk5rO+A1X4XIw6mmiXauhMJaKpqM++K1X0YuS4m82jWDKCdBxckIWy3hhJWvBmNzIHNw==}
+
+  '@fontsource/ibm-plex-mono@5.2.5':
+    resolution: {integrity: sha512-G09N3GfuT9qj3Ax2FDZvKqZttzM3v+cco2l8uXamhKyXLdmlaUDH5o88/C3vtTHj2oT7yRKsvxz9F+BXbWKMYA==}
+
+  '@fontsource/old-standard-tt@5.2.5':
+    resolution: {integrity: sha512-QBeO1KBnP2m0y4d24PqKxfNEg5zPCg2c1LLMpA4DYc3z4hvziyZMS/oacXisLiHzpFPXrFjivmcBF7Na1kAAuQ==}
 
   '@jridgewell/gen-mapping@0.3.8':
     resolution: {integrity: sha512-imAbBGkb+ebQyxKgzv5Hu2nmROxoDOXHh80evxdoXNOrvAnVx7zimzc1Oo5h9RlfV4vPXaE2iM5pOFbvOCClWA==}
@@ -633,6 +664,16 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.5':
     optional: true
+
+  '@fontsource-variable/merriweather@5.2.3': {}
+
+  '@fontsource-variable/outfit@5.2.5': {}
+
+  '@fontsource/allura@5.2.5': {}
+
+  '@fontsource/ibm-plex-mono@5.2.5': {}
+
+  '@fontsource/old-standard-tt@5.2.5': {}
 
   '@jridgewell/gen-mapping@0.3.8':
     dependencies:

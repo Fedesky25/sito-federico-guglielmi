@@ -24,5 +24,12 @@
 		"onlyBuiltDependencies": [
 			"esbuild"
 		]
+	},
+	"dependencies": {
+		"@fontsource-variable/merriweather": "^5.2.3",
+		"@fontsource-variable/outfit": "^5.2.5",
+		"@fontsource/allura": "^5.2.5",
+		"@fontsource/ibm-plex-mono": "^5.2.5",
+		"@fontsource/old-standard-tt": "^5.2.5"
 	}
 }

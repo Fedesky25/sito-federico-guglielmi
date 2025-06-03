@@ -64,6 +64,7 @@
             <a href="https://www.linkedin.com/in/fedesky25/">Fedesky25</a>
         </li>
     </ul>
+    <div class="watermark" aria-hidden="true">&para;</div>
 </footer>
 
 
@@ -218,7 +219,7 @@
         line-height: 1.5;
         margin-bottom: 0.8rem;
     }
-    footer::before {
+    footer .watermark {
         content: '\00B6';
         position: absolute;
         bottom: 0;

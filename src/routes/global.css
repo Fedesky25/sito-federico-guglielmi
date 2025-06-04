@@ -58,7 +58,10 @@ h2 {
     font-size: 2.5rem;
     margin-bottom: 1em;
 }
-* + h2 {margin-top: 3.5em;}
+
+section + section {
+    margin-top: 9rem;
+}
 
 .scale-text :is(p, li, h2, h3) {
     transform: scale(0.95);

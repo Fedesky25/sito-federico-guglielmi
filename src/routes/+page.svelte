@@ -28,11 +28,22 @@
     <p class="enter">Welcome to my corner <br> of the Internet</p>
 </header>
 <main>
-    <h2>In a nutshell</h2>
-    <p>I am a {age} years old young man currently enrolled at Politecnico di Torino in the Master Degree <span class="quote">Quantum Engineering</span></p>
-    <p>I have a keen desire to create the new and refactor the old, which neatly mixes with my passion for coding and phyiscs.</p>
-
-    <h2>In detail</h2>
+    <section class="nutshell">
+        <h2>In a nutshell</h2>
+        <div>
+            <p>I am a {age} years old young man currently enrolled at Politecnico di Torino in the Master Degree <span class="quote">Quantum Engineering</span></p>
+            <p>I have a keen desire to create the new and refactor the old, which neatly mixes with my passion for coding and phyiscs.</p>
+        </div>
+    </section>
+    <!-- <section>
+        <h2>In detail</h2>
+        <div>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa ducimus eligendi nihil autem accusamus quam voluptatum, doloribus eos at mollitia, dicta ab molestiae non labore blanditiis consequuntur est cum? Labore?</p>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto accusamus perspiciatis deserunt harum dicta optio odit neque asperiores totam, eos natus! Corporis reprehenderit quia rerum assumenda corrupti eveniet veritatis nulla.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque non in assumenda iusto beatae eos est. Explicabo architecto rerum nam? Vel et quos pariatur aut voluptatum deleniti dolorum cumque quasi.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio aliquid eos veniam ducimus repellat ullam ab inventore. Ab possimus dignissimos rem animi cum, laboriosam, natus blanditiis pariatur corrupti nobis ullam.</p>
+        </div>
+    </section> -->
 </main>
 
 
@@ -80,11 +91,25 @@
         color: var(--primary);
     }
 
-    main p  {
+    main p + p  {
         margin-top: 1.5rem;
     }
 
     .quote::before { content: '\201C'; }
     .quote::after { content: '\201D'; }
     .quote::before, .quote::after { opacity: 0.7; }
+
+    @media (min-width: 45rem) {
+        section {
+            display: grid;
+            column-gap: 4rem;
+            grid-template-columns: 2fr 3fr;
+            max-width: 65ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        section h2 {
+            justify-self: right;
+        }
+    }
 </style>

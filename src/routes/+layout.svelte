@@ -6,20 +6,39 @@
     import MenuIcon from "$lib/menu-icon.svelte";
     import PageLink from "$lib/PageLink.svelte";
 
-    import { afterNavigate } from "$app/navigation";
+    import { afterNavigate, disableScrollHandling } from "$app/navigation";
 
-    let { children } = $props();
+    import { fade } from "svelte/transition";
+    import { cubicOut } from "svelte/easing";
+
+    let { children, data } = $props();
 
     let open_nav = $state(false);
 
-    afterNavigate(() => { open_nav = false; })
+    afterNavigate(() => {
+        disableScrollHandling()
+        open_nav = false;
+    })
+
+    function applyTextTransition(this: HTMLElement, event: Event) {
+        if(event.target !== this) return;
+        this.classList.add("scale-text");
+    }
+    function scrollToTop() {
+        window.scrollTo(0,0);
+    }
 </script>
 
 <div class="nav-wrapper" class:fix-sticky={open_nav}>
     <div class="head glass glass-transition" class:glass-dark={open_nav}>
         <a class="signature" href="/">F. Guglielmi</a>
         <nav class="desktop-nav">
-
+            <ul>
+                <li><PageLink link="/" display="Who am I" /></li>
+                <li><PageLink link="/projects" display="Projects" /></li>
+                <li><PageLink link="/career" display="Career" /></li>
+                <li><PageLink link="/education" display="Education" /></li>
+            </ul>
         </nav>
         <button 
             class="mobile-menu-btn"
@@ -49,7 +68,17 @@
     </ul>
 </nav>
 <div class="body">
-    {@render children()}
+    {#key data.pathname}
+        <div 
+            class="inner-body" 
+            onoutroend={scrollToTop}
+            onoutrostart={applyTextTransition}
+            out:fade={{duration: 400, easing: cubicOut}}
+            in:fade={{duration: 10, delay: 400}}
+        >
+            {@render children()}
+        </div>
+    {/key}
 </div>
 <footer>
     <h2>Contacts</h2>
@@ -91,13 +120,14 @@
     .head {
         border-radius: 7px;
         padding: 0.5rem;
-        font-size: 1.5rem;
         display: grid;
         grid-template-columns: auto 1fr auto;
+        align-items: center;
     }
     .signature {
         font-family: 'Allura', cursive;
         text-decoration: none;
+        font-size: 1.5rem;
         color: var(--primary);
     }
     button {
@@ -138,7 +168,7 @@
     }
 
     ul { list-style: none; }
-    
+    .desktop-nav ul { display: none; }
     .mobile-nav ul {
         z-index: 2;
     }
@@ -241,5 +271,33 @@
         color: white;
         text-decoration-color: gray;
         margin-left: 1ch;
+    }
+
+    @media (min-width: 740px) {
+        .nav-wrapper { top: max(2rem, 4vh); }
+        .head {
+            max-width: 70ch;
+            margin: 0rem auto;
+        }
+
+        .mobile-nav, button { display: none; }
+        .desktop-nav { grid-column: 3; }
+        .desktop-nav ul {
+            display: flex;
+            flex-direction: row;
+            font-size: 1.3rem;
+        }
+        .desktop-nav li {
+            margin-left: 1.2ch;
+            margin-right: 0.8ch;
+            position: relative;
+        }
+        .desktop-nav li + li::before {
+            content: '|';
+            position: absolute;
+            left: -1ch;
+            opacity: 0.2;
+            color: var(--primary);
+        }
     }
 </style>

@@ -88,11 +88,11 @@
         <ul>
             <li>
                 <img src="/icons/linkedin.svg" alt="LinkedIn">
-                <a href="https://www.linkedin.com/in/fedesky25/">Fedesky25</a>
+                <a href="https://www.linkedin.com/in/fedesky25/" target="_blank" rel="noreferrer">Fedesky25</a>
             </li>
             <li>
                 <img src="/icons/github.svg" alt="GitHub">
-                <a href="https://www.linkedin.com/in/fedesky25/">Fedesky25</a>
+                <a href="https://github.com/Fedesky25" target="_blank" rel="noreferrer">Fedesky25</a>
             </li>
         </ul>
     </div>

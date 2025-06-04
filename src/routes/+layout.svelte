@@ -286,6 +286,7 @@
             display: flex;
             flex-direction: row;
             font-size: 1.3rem;
+            --highlight-clr: var(--primary);
         }
         .desktop-nav li {
             margin-left: 1.2ch;

@@ -23,10 +23,10 @@
         top: 60%;
         height: 0.8em;
         width: 3em;
-        background-color: currentColor;
+        background-color: var(--highlight-clr, currentColor);
         opacity: 0;
         transition: opacity 0.1s ease;
         transform: translateY(-50%) skewY(10deg);
     }
-    a.selected::before { opacity: 0.25; }
+    a.selected::before { opacity: 0.2; }
 </style>

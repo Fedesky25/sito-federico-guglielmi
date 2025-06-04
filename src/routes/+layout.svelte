@@ -233,14 +233,16 @@
     }
 
     .body {
+        z-index: 10;
         padding: 1.25rem;
         padding-bottom: 5rem;
         background-color: white;
         box-shadow: 0px 10px 9px -10px black;
+        position: relative;
     }
 
     footer {
-        z-index: -1;
+        z-index: 5;
         position: sticky;
         bottom: 0;
         background-color: var(--primary);

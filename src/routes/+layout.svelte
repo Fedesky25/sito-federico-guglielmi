@@ -81,19 +81,21 @@
     {/key}
 </div>
 <footer>
-    <h2>Contacts</h2>
-    <p>Wow...<br> I'm honored you scrolled this far down<br>Social networks are not really my thing, but I guess you deserve at least to know the few accounts I do have:</p>
-    <ul>
-        <li>
-            <img src="/icons/linkedin.svg" alt="LinkedIn">
-            <a href="https://www.linkedin.com/in/fedesky25/">Fedesky25</a>
-        </li>
-        <li>
-            <img src="/icons/github.svg" alt="GitHub">
-            <a href="https://www.linkedin.com/in/fedesky25/">Fedesky25</a>
-        </li>
-    </ul>
     <div class="watermark" aria-hidden="true">&para;</div>
+    <div class="footer-body">
+        <h2>Contacts</h2>
+        <p>Wow...<br> I'm honored you scrolled this far down<br>Social networks are not really my thing, but I guess you deserve at least to know the few accounts I do have:</p>
+        <ul>
+            <li>
+                <img src="/icons/linkedin.svg" alt="LinkedIn">
+                <a href="https://www.linkedin.com/in/fedesky25/">Fedesky25</a>
+            </li>
+            <li>
+                <img src="/icons/github.svg" alt="GitHub">
+                <a href="https://www.linkedin.com/in/fedesky25/">Fedesky25</a>
+            </li>
+        </ul>
+    </div>
 </footer>
 
 
@@ -250,7 +252,7 @@
         margin-bottom: 0.8rem;
     }
     footer .watermark {
-        content: '\00B6';
+        user-select: none;
         position: absolute;
         bottom: 0;
         right: 1rem;
@@ -271,6 +273,7 @@
         color: white;
         text-decoration-color: gray;
         margin-left: 1ch;
+        cursor: pointer;
     }
 
     @media (min-width: 740px) {
@@ -299,6 +302,21 @@
             left: -1ch;
             opacity: 0.2;
             color: var(--primary);
+        }
+        .footer-body {
+            margin: 7vh 0;
+            display: flex;
+            justify-content: center;
+        }
+        .footer-body p {
+            max-width: 40ch;
+            margin-inline: 4rem;
+        }
+        .footer-body ul {
+            margin-top: auto;
+        }
+        footer .watermark {
+            right: 25%;
         }
     }
 </style>

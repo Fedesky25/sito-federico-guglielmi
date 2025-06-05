@@ -59,7 +59,7 @@
     @keyframes enter {
         0% {
             opacity: 0;
-            transform: translateY(-0.1rem);
+            transform: translateY(-5px);
         }
         100% {
             opacity: 1;
@@ -67,7 +67,7 @@
         }
     }
     
-    header { --delay: 2.3s; }
+    header { --delay: 1.7s; }
     header p {
         font-size: 1.4rem;
         text-align: center;

@@ -25,8 +25,11 @@
         width: 3em;
         background-color: var(--highlight-clr, currentColor);
         opacity: 0;
-        transition: opacity 0.1s ease;
-        transform: translateY(-50%) skewY(10deg);
+        transform: translateY(-50%) skewY(10deg) scaleY(0);
+        transition: opacity 0.2s ease, transform 0.2s ease;
     }
-    a.selected::before { opacity: 0.2; }
+    a.selected::before {
+        opacity: 0.2;
+        transform: translateY(-50%) skewY(10deg) scaleY(1);
+    }
 </style>

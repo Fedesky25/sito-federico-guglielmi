@@ -1,6 +1,7 @@
 <script>
     import "@fontsource/old-standard-tt";
     import TypeWriter from "$lib/TypeWriter.svelte";
+    import Reveal from "$lib/Reveal.svelte";
 
     const birthday = Date.UTC(2001, 11, 25);
     const MS_PER_YEAR = 1000 * 60 * 60 * 24 * 365;
@@ -35,6 +36,18 @@
             <p>I have a keen desire to create the new and refactor the old, which neatly mixes with my passion for coding and phyiscs.</p>
         </div>
     </section>
+
+    <section style:--diameter="calc(16vw + 20vh)">
+        <Reveal>
+            <div class="mottos">
+                <span lang="la">Creo, ergo sum</span>
+                <span lang="it">Creo, dunque sono</span>
+                <span lang="en">I create, therefore I am</span>
+                <span lang="zh">我创造，故我在</span>
+            </div>
+        </Reveal>
+    </section>
+
     <!-- <section>
         <h2>In detail</h2>
         <div>
@@ -99,8 +112,21 @@
     .quote::after { content: '\201D'; }
     .quote::before, .quote::after { opacity: 0.7; }
 
+    .mottos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: max(4rem, 8vw);
+        text-align: center;
+        line-height: 0.9;
+        font-family: 'Old Standard TT', serif;
+    }
+    .mottos span {
+        margin: max(2rem, 5vh) 0;
+    }
+
     @media (min-width: 45rem) {
-        section {
+        .nutshell {
             display: grid;
             column-gap: 4rem;
             grid-template-columns: 2fr 3fr;
@@ -108,7 +134,7 @@
             margin-left: auto;
             margin-right: auto;
         }
-        section h2 {
+        .nutshell h2 {
             justify-self: right;
         }
     }

@@ -63,6 +63,10 @@ section + section {
     margin-top: 9rem;
 }
 
+.bpad {
+    padding: 1.25rem;
+}
+
 .scale-text :is(p, li, h2, h3) {
     transform: scale(0.95);
     transition: transform 0.2s ease;

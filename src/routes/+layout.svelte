@@ -234,7 +234,6 @@
 
     .body {
         z-index: 10;
-        padding: 1.25rem;
         padding-bottom: 5rem;
         background-color: white;
         box-shadow: 0px 10px 9px -10px black;

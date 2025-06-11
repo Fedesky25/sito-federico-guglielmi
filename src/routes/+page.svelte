@@ -29,7 +29,7 @@
     <p class="enter">Welcome to my corner <br> of the Internet</p>
 </header>
 <main>
-    <section class="nutshell">
+    <section class="nutshell bpad">
         <h2>In a nutshell</h2>
         <div>
             <p>I am a {age} years old young man currently enrolled at Politecnico di Torino in the Master Degree <span class="quote">Quantum Engineering</span></p>
@@ -136,6 +136,14 @@
         }
         .nutshell h2 {
             justify-self: right;
+        }
+    }
+    @media (max-width: 45rem) {
+        .mottos {
+            overflow-x: hidden;
+        }
+        .mottos span {
+            white-space: nowrap;
         }
     }
 </style>

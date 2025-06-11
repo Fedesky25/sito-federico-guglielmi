@@ -72,6 +72,11 @@ section + section {
     transition: transform 0.2s ease;
 }
 
+::selection {
+    background-color: var(--primary);
+    color: #eee;
+}
+
 
 /* @media (prefers-color-scheme: dark) {
     .glass {

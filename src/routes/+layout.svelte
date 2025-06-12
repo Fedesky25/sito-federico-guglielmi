@@ -129,7 +129,7 @@
     .signature {
         font-family: 'Allura', cursive;
         text-decoration: none;
-        font-size: 1.5rem;
+        font-size: 1.5em;
         color: var(--primary);
     }
     button {
@@ -280,7 +280,7 @@
     @media (min-width: 740px) {
         .nav-wrapper { top: max(2rem, 4vh); }
         .head {
-            max-width: 70ch;
+            max-width: 57ch;
             margin: 0rem auto;
         }
 
@@ -289,7 +289,7 @@
         .desktop-nav ul {
             display: flex;
             flex-direction: row;
-            font-size: 1.3rem;
+            font-size: 1.2em;
             --highlight-clr: var(--primary);
         }
         .desktop-nav li {

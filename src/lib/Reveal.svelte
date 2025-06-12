@@ -163,4 +163,9 @@
     @media (pointer: none) {
         .shapes { display: none; }
     }
+    @media (min-width: 120rem) {
+        .content {
+            --ts: 2px var(--primary);        
+        }
+    }
 </style>

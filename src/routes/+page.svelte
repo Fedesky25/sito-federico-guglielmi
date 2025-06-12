@@ -1,11 +1,24 @@
-<script>
+<script lang="ts">
     import "@fontsource/old-standard-tt";
     import TypeWriter from "$lib/TypeWriter.svelte";
     import Reveal from "$lib/Reveal.svelte";
+    import { frameThrottle, whenInView } from "$lib";
 
     const birthday = Date.UTC(2001, 11, 25);
     const MS_PER_YEAR = 1000 * 60 * 60 * 24 * 365;
     const age = Math.floor((Date.now() - birthday) / MS_PER_YEAR);
+
+    let x = $state(0);
+    let offsety = 0, height = 0;
+    
+    const movemottos = frameThrottle(() => {
+        x = (window.scrollY - offsety) / (height);
+    });
+    function onenterview(rect: DOMRectReadOnly) {
+        height = rect.height;
+        offsety = window.scrollY + rect.top - window.innerHeight + height/4;
+        movemottos(); 
+    }
 </script>
 
 <svelte:head>
@@ -37,18 +50,20 @@
         </div>
     </section>
 
-    <section style:--diameter="calc(16vw + 20vh)">
+    <section 
+        style:--diameter="calc(16vw + 20vh)" 
+        {@attach whenInView(movemottos, onenterview)}>
         <Reveal>
-            <div class="mottos">
+            <div class="mottos" style:--x="{x}">
                 <span lang="la">Creo, ergo sum</span>
                 <span lang="it">Creo, dunque sono</span>
-                <span lang="en">I create, therefore I am</span>
+                <span lang="en">I create, hence I am</span>
                 <span lang="zh">我创造，故我在</span>
             </div>
         </Reveal>
     </section>
 
-    <!-- <section>
+    <!-- <section class="bpad">
         <h2>In detail</h2>
         <div>
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa ducimus eligendi nihil autem accusamus quam voluptatum, doloribus eos at mollitia, dicta ab molestiae non labore blanditiis consequuntur est cum? Labore?</p>
@@ -116,14 +131,22 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        font-size: max(4rem, 8vw);
+        font-size: max(4rem, 10vw);
         text-align: center;
         line-height: 0.9;
         font-family: 'Old Standard TT', serif;
+        overflow-x: hidden;
     }
     .mottos span {
         margin: max(2rem, 5vh) 0;
+        white-space: nowrap;
+        will-change: transform;
+        --shift: 50vw;
     }
+    .mottos span:nth-child(1) { transform: translateX(calc(var(--shift) * (0.50 - var(--x)))); }
+    .mottos span:nth-child(2) { transform: translateX(calc(var(--shift) * (var(--x) - 0.75))); }
+    .mottos span:nth-child(3) { transform: translateX(calc(var(--shift) * (1.00 - var(--x)))); }
+    .mottos span:nth-child(4) { transform: translateX(calc(var(--shift) * (var(--x) - 1.25))); }
 
     @media (min-width: 45rem) {
         .nutshell {
@@ -136,14 +159,6 @@
         }
         .nutshell h2 {
             justify-self: right;
-        }
-    }
-    @media (max-width: 45rem) {
-        .mottos {
-            overflow-x: hidden;
-        }
-        .mottos span {
-            white-space: nowrap;
         }
     }
 </style>

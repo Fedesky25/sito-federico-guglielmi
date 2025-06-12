@@ -134,7 +134,7 @@
     }
 
     .cursor::after {
-        border: 2px solid black;
+        background-color: var(--secondary);
     }
     .show .cursor::after {
         transform: scale(1);
@@ -146,7 +146,6 @@
         background: radial-gradient(var(--primary) 35%, transparent 70%);
     }
     .shape--big::after {
-
         opacity: 0; 
     }
     .show .shape::after {

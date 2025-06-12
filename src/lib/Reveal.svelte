@@ -64,6 +64,7 @@
 <style>
     .wrapper {
         position: relative;
+        user-select: none;
         cursor: none;
     }
     .mask {

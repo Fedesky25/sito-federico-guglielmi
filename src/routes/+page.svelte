@@ -113,7 +113,7 @@
     
     header { --delay: 1.7s; }
     header p {
-        font-size: 1.4rem;
+        font-size: 1.4em;
         text-align: center;
     }
     header :nth-child(2) { animation-delay: var(--delay); }
@@ -121,16 +121,16 @@
     header :nth-child(4) { animation-delay: calc(var(--delay) + 0.8s); }
     
     .tags {
-        margin-block: 1rem;
+        margin-block: 1em;
         list-style: none;
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
     }
     .tags li {
-        margin: 0.2rem;
-        padding: 0.2rem 0.5rem;
-        border-radius: 1rem;
+        margin: 0.2em;
+        padding: 0.2em 0.5em;
+        border-radius: 1em;
         background-color: #eee;
         color: var(--primary);
     }

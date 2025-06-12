@@ -2,11 +2,14 @@
     import "@fontsource/old-standard-tt";
     import TypeWriter from "$lib/TypeWriter.svelte";
     import Reveal from "$lib/Reveal.svelte";
+    import Framed from "$lib/Framed.svelte";
     import { frameThrottle, whenInView } from "$lib";
 
     const birthday = Date.UTC(2001, 11, 25);
+    const workout_start = Date.UTC(2018, 1, 1);
     const MS_PER_YEAR = 1000 * 60 * 60 * 24 * 365;
     const age = Math.floor((Date.now() - birthday) / MS_PER_YEAR);
+    const workout_years = Math.floor((Date.now() - workout_start) / MS_PER_YEAR);
 
     let x = $state(0);
     let offsety = 0, height = 0;
@@ -43,11 +46,10 @@
 </header>
 <main>
     <section class="nutshell bpad">
-        <h2>In a nutshell</h2>
-        <div>
+        <Framed title="TL;DR">
             <p>I am a {age} years old young man currently enrolled at Politecnico di Torino in the Master Degree <span class="quote">Quantum Engineering</span></p>
             <p>I have a keen desire to create the new and refactor the old, which neatly mixes with my passion for coding and phyiscs.</p>
-        </div>
+        </Framed>
     </section>
 
     <section 
@@ -63,6 +65,20 @@
         </Reveal>
     </section>
 
+    <section class="bpad">
+        <Framed title="About me">
+            <ul class="traits">
+                <li>Currently living and studying in Turin, Italy</li>
+                <li>Admirer of the nature on the hills of Perinaldo</li>
+                <li>Grown up watching Captain Harlock, building (a lot of) LEGOs, and playing Minecraft</li>
+                <li>Diligently working out three/four times a week for the past {workout_years}+ years (calisthenics-like)</li>
+                <li>Physics enthusiast of anything from general relativity to quantum mechanics</li>
+                <li>Zealous coder: started from C++ and continued with Python, JavaScript, Julia, ...</li>
+                <li>Started coding websites as a side quest; ended up really liking creating web UIs</li>
+                <li>Proud owner of a friendly cat (see below)</li>
+            </ul>
+        </Framed>
+    </section>
     <!-- <section class="bpad">
         <h2>In detail</h2>
         <div>
@@ -148,17 +164,25 @@
     .mottos span:nth-child(3) { transform: translateX(calc(var(--shift) * (1.00 - var(--x)))); }
     .mottos span:nth-child(4) { transform: translateX(calc(var(--shift) * (var(--x) - 1.25))); }
 
+    .traits {
+        list-style-image: none;
+        list-style-type: circle;
+        list-style-position: inside;
+    }
+    .traits li + li {
+        margin-top: 1.5rem;
+    }
+    .traits li::marker {
+        content: '\00BB  ';
+        color: var(--secondary);
+        padding-right: 1rem;
+        font-size: 1.5em;
+        line-height: 0.65;
+    }
+
     @media (min-width: 45rem) {
-        .nutshell {
-            display: grid;
-            column-gap: 4rem;
-            grid-template-columns: 2fr 3fr;
-            max-width: 65ch;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .nutshell h2 {
-            justify-self: right;
+        .traits li + li {
+            margin-top: 1rem;
         }
     }
 </style>

@@ -19,7 +19,7 @@
     });
     function onenterview(rect: DOMRectReadOnly) {
         height = rect.height;
-        offsety = window.scrollY + rect.top - window.innerHeight + height/4;
+        offsety = window.scrollY + rect.top - document.documentElement.clientHeight + height/4;
         movemottos(); 
     }
 </script>

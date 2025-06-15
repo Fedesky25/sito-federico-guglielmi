@@ -44,8 +44,8 @@ body {
 }
 
 header {
-    min-height: calc(100vh - 5rem);
-    padding-top: calc(25vh - 5rem);
+    min-height: 100lvh;
+    padding-top: 35vh;
 }
 
 h1, h2, h3 {

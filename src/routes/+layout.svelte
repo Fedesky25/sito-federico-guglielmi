@@ -107,19 +107,23 @@
         word-spacing: 0.1ch;
     }
     .nav-wrapper {
-        top: 0;
+        top: 1rem;
         z-index: 520;
         position: sticky;
         background: transparent;
-        padding: 0.5rem 2.5rem;
-        margin: 2rem 0;
         transition: top 0.4s ease;
+
+        height: 0;
+        margin-top: 2rem;
+        margin-bottom: -2rem;
+        overflow-y: visible;
     }
     .nav-wrapper.fix-sticky {
         top: 2rem;
     }
 
     .head {
+        margin: 0.5rem 2.5rem;
         border-radius: 7px;
         padding: 0.5rem;
         display: grid;

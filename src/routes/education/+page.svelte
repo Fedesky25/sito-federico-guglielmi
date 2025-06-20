@@ -24,7 +24,8 @@
     <section
         class:noselect={progress > 1.5} 
         class={["bpad", progress < 1 ? null : progress < 2 ? "masked" : "hidden"]}>
-        <div>
+        <img src="/poli-duca.jpg" alt="Politecnico di Torino, entrance Corso Duca Degli Abruzzi">
+        <div class="text">
             <span class="subtle">Master's degree</span>
             <h2>Quantum Engineering</h2>
             <p>Degree program designed for the next generation of engineers at the frontier of quantum computing, communications, and sensing. It delves into advanced topics such as quantum information, quantum photonics, quantum condensed matter physics, and design of quantum devices and systems.</p>
@@ -34,12 +35,12 @@
                 <li>Average mark: 28.6</li>
             </ul>
         </div>
-        <img src="/poli-duca.jpg" alt="Politecnico di Torino, entrance Corso Duca Degli Abruzzi">
     </section>
     <section 
     class:noselect={progress > 2.5}
     class={["bpad", progress < 2 ? null : progress < 3 ? "masked" : "hidden"]}>
-        <div>
+        <img src="/poli-auleI.jpg" alt="Rooms 'I' with their garden at Politecnico di Torino">
+        <div class="text">
             <span class="subtle">Bachelor's degree</span>
             <h2>Physical Engineering</h2>
             <p>Multidisciplinary program which combines traits from electronic engineering and applied physics. It delves into many advanced topics such as quantum mechanics, solid-state physics, and electronic devices.</p>
@@ -49,10 +50,10 @@
                 <li>Final grade: 110/110 <i>cum laude</i></li>
             </ul>
         </div>
-        <img src="/poli-auleI.jpg" alt="Rooms 'I' with their garden at Politecnico di Torino">
     </section>
     <section class="bpad">
-        <div>
+        <img src="/catta.jpg" alt="Entrance of the High School">
+        <div class="text">
             <span class="subtle">High school diploma</span>
             <h2>Applied Sciences</h2>
             <p>Scientific high school program with greater focus on science, mathematics, and informatics. Thanks to its energetic enviroment, much of my passion for coding and physics stems from this lovely high school.</p>
@@ -62,7 +63,6 @@
                 <li>Final grade: 100/100 <i>cum laude</i></li>
             </ul>
         </div>
-        <img src="/catta.jpg" alt="Entrance of the High School">
     </section>
 </div>
 
@@ -76,14 +76,17 @@
     .wrapper {
         position: relative;
         margin-bottom: -5rem;
-        /* height: 400lvh; */
+        display: grid;
+        height: 400vh;
+        height: 400lvh;
     }
     header, section {
+        grid-row: 1;
+        grid-column: 1;
         position: sticky;
-        bottom: 0;
         top: 0;
+        height: 100vh;
         height: 100lvh;
-        /* width: 100%; */
         margin: 0;
     }
     .masked {
@@ -106,60 +109,84 @@
         z-index: 8;
         background-color: white;
     }
+    section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        --clr-low: rgba(0,0,0,0.6);
+        --cg-pos: 65% 30%; 
+    }
     section:nth-of-type(1) {
         z-index: 7;
-        /* background-color: #58508d; */
-        /* background-color: hsl(277, 38%, 23%); */
-        background-image: conic-gradient(from -0.1turn, #58508d, #003f5c, #58508d);
+        background-image: conic-gradient(from -45deg at var(--cg-pos), #58508d, #003f5c, #58508d);
         color: white;
         --clr-low: rgba(255,255,255,0.7);
     }
     section:nth-of-type(2) {
         z-index: 6;
-        background-image: conic-gradient(from 70deg, #1982c4, #95b8d1, #1982c4);
+        background-image: conic-gradient(from 70deg at var(--cg-pos), #1982c4, #95b8d1, #1982c4);
     }
     section:nth-of-type(3) {
         z-index: 5;
-        background-image: conic-gradient(from -80deg, #4c956c, #9dad7f, #4c956c);
+        background-image: conic-gradient(from -60deg at var(--cg-pos), #4c956c, #9dad7f, #4c956c);
     }
 
-    section {
-        display: grid;
-        grid-template-columns: 34vw auto;
-        column-gap: 5vw;
-        align-items: center;
-        justify-content: center;
-        --clr-low: rgba(0,0,0,0.6);
-    }
-    section > div {
-        text-align: right;
-    }
+
     img {
-        width: 48vw;
-        height: 27vw;
+        max-width: 100%;
+        margin-bottom: 3.7em;
         object-fit: cover;
         border-radius: 2px;
         box-shadow: 0px 0px 10px #444;
         /* filter: saturate(80%) blur(3px) brightness(40%); */
     }
-
-    h2 {
-        color: var(--clr-high);
-    }
-
+    
     .subtle {
         display: block;
         color: var(--clr-low);
         font-size: 1.1em;
         margin-bottom: -0.3em;
     }
-
+    
     p {
         color: var(--clr-low);
     }
-
+    
     ul {
         list-style: none;
         margin-top: 2em;
     }
+
+    @media (max-width: 60rem) {
+        img, .text {
+            width: 100%;
+            max-width: 29em;
+        }
+    }
+    
+    @media (min-width: 60rem) {
+        section {
+            display: grid;
+            grid-template-columns: 34vw auto;
+            column-gap: 5vw;
+            align-items: center;
+            justify-content: center;
+            --cg-pos: center;
+        }
+        .text {
+            grid-row: 1;
+            grid-column: 1;
+            text-align: right;
+        }
+        img {
+            grid-row: 1;
+            grid-column: 2;
+            width: 48vw;
+            height: 27vw;
+            margin-bottom: 0;
+        }
+
+    }
+
 </style>

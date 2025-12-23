@@ -9,18 +9,25 @@
     const workout_start = Date.UTC(2018, 1, 1);
     const MS_PER_YEAR = 1000 * 60 * 60 * 24 * 365;
     const age = Math.floor((Date.now() - birthday) / MS_PER_YEAR);
-    const workout_years = Math.floor((Date.now() - workout_start) / MS_PER_YEAR);
+    const workout_years = Math.floor(
+        (Date.now() - workout_start) / MS_PER_YEAR,
+    );
 
     let x = $state(0);
-    let offsety = 0, height = 0;
-    
+    let offsety = 0,
+        height = 0;
+
     const movemottos = frameThrottle(() => {
-        x = (window.scrollY - offsety) / (height);
+        x = (window.scrollY - offsety) / height;
     });
     function onenterview(rect: DOMRectReadOnly) {
         height = rect.height;
-        offsety = window.scrollY + rect.top - document.documentElement.clientHeight + height/4;
-        movemottos(); 
+        offsety =
+            window.scrollY +
+            rect.top -
+            document.documentElement.clientHeight +
+            height / 4;
+        movemottos();
     }
 </script>
 
@@ -42,21 +49,29 @@
             <li>Computational EM</li>
         </ul>
     </div>
-    <p class="enter">Welcome to my corner <br> of the Internet</p>
+    <p class="enter">Welcome to my corner <br /> of the Internet</p>
 </header>
 <main>
     <section class="nutshell bpad">
         <Framed title="TL;DR">
-            <p>I am a {age} years old young man currently enrolled at Politecnico di Torino in the Master Degree <span class="quote">Quantum Engineering</span></p>
-            <p>I have a keen desire to create the new and refactor the old, which neatly mixes with my passion for coding and phyiscs.</p>
+            <p>
+                I am a {age} years old young man currently enrolled at Politecnico
+                di Torino in the Master Degree
+                <span class="quote">Quantum Engineering</span>
+            </p>
+            <p>
+                I have a keen desire to create the new and refactor the old,
+                which neatly mixes with my passion for coding and phyiscs.
+            </p>
         </Framed>
     </section>
 
-    <section 
-        style:--diameter="calc(16vw + 20vh)" 
-        {@attach whenInView(movemottos, onenterview)}>
+    <section
+        style:--diameter="calc(16vw + 20vh)"
+        {@attach whenInView(movemottos, onenterview)}
+    >
         <Reveal>
-            <div class="mottos" style:--x="{x}">
+            <div class="mottos" style:--x={x}>
                 <span lang="la">Creo, ergo sum</span>
                 <span lang="it">Creo, dunque sono</span>
                 <span lang="en">I create, hence I am</span>
@@ -70,11 +85,26 @@
             <ul class="traits">
                 <li>Currently living and studying in Turin, Italy</li>
                 <li>Admirer of the nature on the hills of Perinaldo</li>
-                <li>Grown up watching Captain Harlock, building (a lot of) LEGOs, and playing Minecraft</li>
-                <li>Diligently working out three/four times a week for the past {workout_years}+ years (calisthenics-like)</li>
-                <li>Physics enthusiast of anything from general relativity to quantum mechanics</li>
-                <li>Zealous coder: started from C++ and continued with Python, JavaScript, Julia, ...</li>
-                <li>Started coding websites as a side quest; ended up really liking creating web UIs</li>
+                <li>
+                    Grown up watching Captain Harlock, building (a lot of)
+                    LEGOs, and playing Minecraft
+                </li>
+                <li>
+                    Diligently working out three/four times a week for the past {workout_years}+
+                    years (calisthenics-like)
+                </li>
+                <li>
+                    Physics enthusiast of anything from general relativity to
+                    quantum mechanics
+                </li>
+                <li>
+                    Zealous coder: started from C++ and continued with Python,
+                    JavaScript, Julia, ...
+                </li>
+                <li>
+                    Started coding websites as a side quest; ended up really
+                    liking creating web UIs
+                </li>
                 <li>Proud owner of a friendly cat (see below)</li>
             </ul>
         </Framed>
@@ -89,8 +119,6 @@
         </div>
     </section> -->
 </main>
-
-
 
 <style>
     .enter {
@@ -110,16 +138,24 @@
             transform: translateY(0);
         }
     }
-    
-    header { --delay: 1.7s; }
+
+    header {
+        --delay: 1.7s;
+    }
     header p {
         font-size: 1.4em;
         text-align: center;
     }
-    header :nth-child(2) { animation-delay: var(--delay); }
-    header :nth-child(3) { animation-delay: calc(var(--delay) + 0.4s); }
-    header :nth-child(4) { animation-delay: calc(var(--delay) + 0.8s); }
-    
+    header :nth-child(2) {
+        animation-delay: var(--delay);
+    }
+    header :nth-child(3) {
+        animation-delay: calc(var(--delay) + 0.4s);
+    }
+    header :nth-child(4) {
+        animation-delay: calc(var(--delay) + 0.8s);
+    }
+
     .tags {
         margin-block: 1em;
         list-style: none;
@@ -135,13 +171,20 @@
         color: var(--primary);
     }
 
-    main p + p  {
+    main p + p {
         margin-top: 1.5rem;
     }
 
-    .quote::before { content: '\201C'; }
-    .quote::after { content: '\201D'; }
-    .quote::before, .quote::after { opacity: 0.7; }
+    .quote::before {
+        content: "\201C";
+    }
+    .quote::after {
+        content: "\201D";
+    }
+    .quote::before,
+    .quote::after {
+        opacity: 0.7;
+    }
 
     .mottos {
         display: flex;
@@ -150,7 +193,7 @@
         font-size: max(4rem, 10vw);
         text-align: center;
         line-height: 0.9;
-        font-family: 'Old Standard TT', serif;
+        font-family: "Old Standard TT", serif;
         overflow-x: hidden;
     }
     .mottos span {
@@ -159,10 +202,18 @@
         will-change: transform;
         --shift: 50vw;
     }
-    .mottos span:nth-child(1) { transform: translateX(calc(var(--shift) * (0.50 - var(--x)))); }
-    .mottos span:nth-child(2) { transform: translateX(calc(var(--shift) * (var(--x) - 0.75))); }
-    .mottos span:nth-child(3) { transform: translateX(calc(var(--shift) * (1.00 - var(--x)))); }
-    .mottos span:nth-child(4) { transform: translateX(calc(var(--shift) * (var(--x) - 1.25))); }
+    .mottos span:nth-child(1) {
+        transform: translateX(calc(var(--shift) * (0.5 - var(--x))));
+    }
+    .mottos span:nth-child(2) {
+        transform: translateX(calc(var(--shift) * (var(--x) - 0.75)));
+    }
+    .mottos span:nth-child(3) {
+        transform: translateX(calc(var(--shift) * (1 - var(--x))));
+    }
+    .mottos span:nth-child(4) {
+        transform: translateX(calc(var(--shift) * (var(--x) - 1.25)));
+    }
 
     .traits {
         list-style-image: none;
@@ -173,7 +224,7 @@
         margin-top: 1.5rem;
     }
     .traits li::marker {
-        content: '\00BB  ';
+        content: "\00BB  ";
         color: var(--secondary);
         padding-right: 1rem;
         font-size: 1.5em;

@@ -16,16 +16,16 @@
     let open_nav = $state(false);
 
     afterNavigate(() => {
-        disableScrollHandling()
+        disableScrollHandling();
         open_nav = false;
-    })
+    });
 
     function applyTextTransition(this: HTMLElement, event: Event) {
-        if(event.target !== this) return;
+        if (event.target !== this) return;
         this.classList.add("scale-text");
     }
     function scrollToTop() {
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 </script>
 
@@ -40,18 +40,23 @@
                 <li><PageLink link="/education" display="Education" /></li>
             </ul>
         </nav>
-        <button 
+        <button
             class="mobile-menu-btn"
-            aria-expanded={open_nav} 
-            aria-controls="mobile-nav" 
+            aria-expanded={open_nav}
+            aria-controls="mobile-nav"
             aria-label="Mobile navigation"
-            onclick={() => open_nav = !open_nav}
+            onclick={() => (open_nav = !open_nav)}
         >
             <MenuIcon open={open_nav} />
         </button>
     </div>
 </div>
-<nav class="mobile-nav" class:open={open_nav} id="mobile-nav" aria-label="Mobile navigation">
+<nav
+    class="mobile-nav"
+    class:open={open_nav}
+    id="mobile-nav"
+    aria-label="Mobile navigation"
+>
     <div class="strips">
         <div></div>
         <div></div>
@@ -59,7 +64,7 @@
         <div></div>
         <div></div>
     </div>
-    <img src="/night-sky.jpg" alt="Night sky">
+    <img src="/night-sky.jpg" alt="Night sky" />
     <ul>
         <li><PageLink link="/" display="Who am I" /></li>
         <li><PageLink link="/projects" display="Projects" /></li>
@@ -69,12 +74,12 @@
 </nav>
 <div class="body">
     {#key data.pathname}
-        <div 
-            class="inner-body" 
+        <div
+            class="inner-body"
             onoutroend={scrollToTop}
             onoutrostart={applyTextTransition}
-            out:fade={{duration: 400, easing: cubicOut}}
-            in:fade={{duration: 10, delay: 400}}
+            out:fade={{ duration: 400, easing: cubicOut }}
+            in:fade={{ duration: 10, delay: 400 }}
         >
             {@render children()}
         </div>
@@ -84,25 +89,35 @@
     <div class="watermark" aria-hidden="true">&para;</div>
     <div class="footer-body">
         <h2>Contacts</h2>
-        <p>Wow...<br> I'm honored you scrolled this far down<br>Social networks are not really my thing, but I guess you deserve at least to know the few accounts I do have:</p>
+        <p>
+            Wow...<br /> I'm honored you scrolled this far down<br />Social
+            networks are not really my thing, but I guess you deserve at least
+            to know the few accounts I do have:
+        </p>
         <ul>
             <li>
-                <img src="/icons/linkedin.svg" alt="LinkedIn">
-                <a href="https://www.linkedin.com/in/fedesky25/" target="_blank" rel="noreferrer">Fedesky25</a>
+                <img src="/icons/linkedin.svg" alt="LinkedIn" />
+                <a
+                    href="https://www.linkedin.com/in/fedesky25/"
+                    target="_blank"
+                    rel="noreferrer">Fedesky25</a
+                >
             </li>
             <li>
-                <img src="/icons/github.svg" alt="GitHub">
-                <a href="https://github.com/Fedesky25" target="_blank" rel="noreferrer">Fedesky25</a>
+                <img src="/icons/github.svg" alt="GitHub" />
+                <a
+                    href="https://github.com/Fedesky25"
+                    target="_blank"
+                    rel="noreferrer">Fedesky25</a
+                >
             </li>
         </ul>
     </div>
 </footer>
 
-
-
 <style>
     :global(body) {
-        font-family: 'Outfit Variable', sans-serif;
+        font-family: "Outfit Variable", sans-serif;
         line-height: 1.4;
         word-spacing: 0.1ch;
     }
@@ -131,7 +146,7 @@
         align-items: center;
     }
     .signature {
-        font-family: 'Allura', cursive;
+        font-family: "Allura", cursive;
         text-decoration: none;
         font-size: 1.5em;
         color: var(--primary);
@@ -146,9 +161,12 @@
         grid-column: 3;
         --icon-clr: var(--primary);
     }
-    .glass-dark > .signature { color: #eee; }
-    .glass-dark > button { --icon-clr: #eee; }
-
+    .glass-dark > .signature {
+        color: #eee;
+    }
+    .glass-dark > button {
+        --icon-clr: #eee;
+    }
 
     .mobile-nav {
         z-index: 500;
@@ -173,8 +191,12 @@
         transition-delay: 0s;
     }
 
-    ul { list-style: none; }
-    .desktop-nav ul { display: none; }
+    ul {
+        list-style: none;
+    }
+    .desktop-nav ul {
+        display: none;
+    }
     .mobile-nav ul {
         z-index: 2;
     }
@@ -184,7 +206,9 @@
         margin-top: 1.5rem;
         opacity: 0;
         transform: translateY(-0.6rem);
-        transition: opacity 0.5s ease, transform 0.5s ease;
+        transition:
+            opacity 0.5s ease,
+            transform 0.5s ease;
 
         font-variation-settings: "wdth" 100;
     }
@@ -212,12 +236,22 @@
         transition: transform 0.3s ease;
         transform: translate(-100%);
     }
-    .open .strips > div { transform: translate(0%);}
+    .open .strips > div {
+        transform: translate(0%);
+    }
 
-    .strips > div:nth-child(2) { transition-delay: 0.1s; }
-    .strips > div:nth-child(3) { transition-delay: 0.2s; }
-    .strips > div:nth-child(4) { transition-delay: 0.3s; }
-    .strips > div:nth-child(5) { transition-delay: 0.4s; }
+    .strips > div:nth-child(2) {
+        transition-delay: 0.1s;
+    }
+    .strips > div:nth-child(3) {
+        transition-delay: 0.2s;
+    }
+    .strips > div:nth-child(4) {
+        transition-delay: 0.3s;
+    }
+    .strips > div:nth-child(5) {
+        transition-delay: 0.4s;
+    }
 
     .mobile-nav img {
         z-index: 2;
@@ -226,7 +260,11 @@
         left: 0;
         width: 100%;
         height: auto;
-        mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 30%, rgba(0,0,0,0));
+        mask-image: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 1) 30%,
+            rgba(0, 0, 0, 0)
+        );
         opacity: 0;
         transition: opacity 0.3s ease;
         transition-delay: 0s;
@@ -263,7 +301,7 @@
         right: 1rem;
         opacity: 0.1;
         font-size: 20rem;
-        font-family: 'Old Standard TT', serif;
+        font-family: "Old Standard TT", serif;
     }
     footer li {
         margin-top: 0.6rem;
@@ -282,14 +320,21 @@
     }
 
     @media (min-width: 740px) {
-        .nav-wrapper { top: max(2rem, 4vh); }
+        .nav-wrapper {
+            top: max(2rem, 4vh);
+        }
         .head {
             max-width: 57ch;
             margin: 0rem auto;
         }
 
-        .mobile-nav, button { display: none; }
-        .desktop-nav { grid-column: 3; }
+        .mobile-nav,
+        button {
+            display: none;
+        }
+        .desktop-nav {
+            grid-column: 3;
+        }
         .desktop-nav ul {
             display: flex;
             flex-direction: row;
@@ -302,7 +347,7 @@
             position: relative;
         }
         .desktop-nav li + li::before {
-            content: '|';
+            content: "|";
             position: absolute;
             left: -1ch;
             opacity: 0.2;

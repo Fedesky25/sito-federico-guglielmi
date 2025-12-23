@@ -52,4 +52,8 @@ export function throttle(ms: number, fn: () => void) {
     };
 }
 
+export function wait(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export function noop() {}

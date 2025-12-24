@@ -92,16 +92,29 @@
     });
 </script>
 
-<div
-    class="wrapper"
-    class:hidden
-    class:sliding
-    style:--pos={strip_pos}
-    data-dir={slide_dir}
->
+<div class="wrapper" class:hidden class:sliding style:--pos={strip_pos}>
     {#each STRIP_ARRAY as v}
         <div class="strip" style:--idx={v}></div>
     {/each}
+    <svg
+        id="transition-arrow"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 -10 20 20"
+        data-dir={slide_dir}
+    >
+        <g fill="white">
+            <circle cx="8" cy="6" r="0.19" />
+            <circle cx="8" cy="-6" r="0.19" />
+            <ellipse cx="18" cy="0" rx="0.25" ry="0.48" />
+            <g stroke="white">
+                <path stroke-width="1" d="M4,0 L18,0" />
+                <path
+                    stroke-width="0.4"
+                    d="M8,-6 Q5,-1,2,0 Q5,1,8,6 Q6,2,4.5,0 Q6,-2,8,-6"
+                />
+            </g>
+        </g>
+    </svg>
 </div>
 
 <style>
@@ -138,38 +151,39 @@
         transition-delay: calc(var(--idx) * 100ms);
     }
 
-    .sliding > .strip {
-        animation-name: strip-slide;
-        animation-duration: 1s;
-        animation-delay: calc(var(--idx) * 50ms);
-        animation-timing-function: cubic-bezier(0.5, 0.9, 0.5, 0.1);
-        animation-fill-mode: none;
-    }
-
-    .sliding::after {
+    svg {
         position: absolute;
         top: 50%;
         left: 50%;
-        color: white;
-        font-size: 9rem;
+        width: 6rem;
+        height: 6rem;
+        display: none;
 
-        animation-name: slide-fade;
         animation-delay: 150ms;
         animation-duration: 1s;
         animation-fill-mode: none;
         animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
     }
 
-    .sliding[data-dir=">"]::after {
-        content: "\2192";
-        --shift-start: -0.35em;
-        --shift-end: 0.1em;
+    [data-dir=">"],
+    [data-dir="<"] {
+        display: block;
+        animation-name: slide-fade;
     }
 
-    .sliding[data-dir="<"]::after {
-        content: "\2190";
-        --shift-start: 0.35em;
-        --shift-end: -0.1em;
+    [data-dir="<"] {
+        --shift-start: 3.5rem;
+        --shift-end: -2rem;
+    }
+
+    [data-dir=">"] {
+        --shift-start: -3.5rem;
+        --shift-end: 2rem;
+    }
+
+    [data-dir=">"] > g {
+        transform: scale(-1, 1);
+        transform-origin: center;
     }
 
     @keyframes slide-fade {

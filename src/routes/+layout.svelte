@@ -8,11 +8,9 @@
     import Transitioner from "$lib/Transitioner.svelte";
 
     import { pushState } from "$app/navigation";
-    import { fade } from "svelte/transition";
-    import { cubicOut } from "svelte/easing";
     import { page } from "$app/state";
 
-    let { children, data } = $props();
+    let { children } = $props();
 
     const open_nav = $derived(page.state.cover_screen === 2);
 
@@ -68,17 +66,7 @@
     </ul>
 </nav>
 <div class="body">
-    {#key data.pathname}
-        <div
-            class="inner-body"
-            onoutroend={scrollToTop}
-            onoutrostart={applyTextTransition}
-            out:fade={{ duration: 400, easing: cubicOut }}
-            in:fade={{ duration: 10, delay: 400 }}
-        >
-            {@render children()}
-        </div>
-    {/key}
+    {@render children()}
 </div>
 <footer>
     <div class="watermark" aria-hidden="true">&para;</div>

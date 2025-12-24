@@ -5,20 +5,21 @@
 
     import MenuIcon from "$lib/menu-icon.svelte";
     import PageLink from "$lib/PageLink.svelte";
+    import Transitioner from "$lib/Transitioner.svelte";
 
-    import { afterNavigate, disableScrollHandling } from "$app/navigation";
-
+    import { pushState } from "$app/navigation";
     import { fade } from "svelte/transition";
     import { cubicOut } from "svelte/easing";
+    import { page } from "$app/state";
 
     let { children, data } = $props();
 
-    let open_nav = $state(false);
+    const open_nav = $derived(page.state.cover_screen === 2);
 
-    afterNavigate(() => {
-        disableScrollHandling();
-        open_nav = false;
-    });
+    function onNavBtnClick() {
+        if (page.state.cover_screen) history.back();
+        else pushState("", { cover_screen: 2 });
+    }
 
     function applyTextTransition(this: HTMLElement, event: Event) {
         if (event.target !== this) return;
@@ -29,6 +30,7 @@
     }
 </script>
 
+<Transitioner />
 <div class="nav-wrapper" class:fix-sticky={open_nav}>
     <div class="head glass glass-transition" class:glass-dark={open_nav}>
         <a class="signature" href="/">F. Guglielmi</a>
@@ -45,7 +47,7 @@
             aria-expanded={open_nav}
             aria-controls="mobile-nav"
             aria-label="Mobile navigation"
-            onclick={() => (open_nav = !open_nav)}
+            onclick={onNavBtnClick}
         >
             <MenuIcon open={open_nav} />
         </button>
@@ -57,13 +59,6 @@
     id="mobile-nav"
     aria-label="Mobile navigation"
 >
-    <div class="strips">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
     <img src="/night-sky.jpg" alt="Night sky" />
     <ul>
         <li><PageLink link="/" display="Who am I" /></li>
@@ -90,7 +85,7 @@
     <div class="footer-body">
         <h2>Contacts</h2>
         <p>
-            Wow...<br /> I'm honored you scrolled this far down<br />Social
+            Wow...<br /> I'm honoured you scrolled this far down<br />Social
             networks are not really my thing, but I guess you deserve at least
             to know the few accounts I do have:
         </p>
@@ -182,7 +177,7 @@
         flex-direction: column;
         justify-content: flex-end;
 
-        transform: translateX(-100%);
+        transform: translateX(100%);
         transition: transform 0s;
         transition-delay: 0.71s;
     }
@@ -216,41 +211,6 @@
         opacity: 1;
         transform: translateY(0);
         transition-delay: 0.45s, 0.45s;
-    }
-
-    .strips {
-        z-index: 1;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow-x: hidden;
-        display: grid;
-        grid-template-rows: repeat(5, 1fr);
-    }
-    .strips > div {
-        height: 100%;
-        width: 100%;
-        background-color: var(--primary);
-        transition: transform 0.3s ease;
-        transform: translate(-100%);
-    }
-    .open .strips > div {
-        transform: translate(0%);
-    }
-
-    .strips > div:nth-child(2) {
-        transition-delay: 0.1s;
-    }
-    .strips > div:nth-child(3) {
-        transition-delay: 0.2s;
-    }
-    .strips > div:nth-child(4) {
-        transition-delay: 0.3s;
-    }
-    .strips > div:nth-child(5) {
-        transition-delay: 0.4s;
     }
 
     .mobile-nav img {

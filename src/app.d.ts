@@ -5,7 +5,9 @@ declare global {
         // interface Error {}
         // interface Locals {}
         // interface PageData {}
-        // interface PageState {}
+        interface PageState {
+            cover_screen?: 0 | 1 | 2;
+        }
         // interface Platform {}
     }
 }

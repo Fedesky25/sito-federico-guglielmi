@@ -51,9 +51,14 @@
             <ul>
                 <li>Politecnico di Torino, Italy</li>
                 <li>
-                    <time datetime="2023-10">October 2023</time> &mdash; present
+                    <time datetime="2023-10">October 2023</time> &mdash;
+                    <time datetime="2025-12">December 2025</time>
                 </li>
-                <li>Average mark: 28.6</li>
+                <li>Final grade: 110/110 <i>cum laude</i></li>
+                <li>
+                    <span style="color: var(--clr-low);">Thesis title:</span>
+                    Accelerated Computational <br /> Paradigms for Quantum Applications
+                </li>
             </ul>
         </div>
     </section>

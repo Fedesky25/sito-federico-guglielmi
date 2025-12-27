@@ -37,7 +37,10 @@
 
 <header>
     <h1><TypeWriter text="Hello there!" loop /></h1>
-    <p class="enter">I am Federico</p>
+    <p class="enter">
+        I am <span class="cursive">Federico</span> &mdash; welcome to my corner of
+        the Internet
+    </p>
     <div class="enter">
         <span class="sr-only">Some of my interests:</span>
         <ul class="tags">
@@ -49,7 +52,7 @@
             <li>Computational EM</li>
         </ul>
     </div>
-    <p class="enter">Welcome to my corner <br /> of the Internet</p>
+    <!-- <p class="enter">Welcome to my corner <br /> of the Internet</p> -->
 </header>
 <main>
     <section class="nutshell bpad">
@@ -122,6 +125,10 @@
 </main>
 
 <style>
+    .cursive {
+        font-family: "Allura", cursive;
+        font-size: 1.2em;
+    }
     .enter {
         animation-name: enter;
         animation-timing-function: ease-in;

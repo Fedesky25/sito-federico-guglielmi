@@ -267,7 +267,7 @@
         cursor: pointer;
     }
 
-    @media (min-width: 740px) {
+    @media (min-width: 46rem) {
         .nav-wrapper {
             top: max(2rem, 4vh);
         }

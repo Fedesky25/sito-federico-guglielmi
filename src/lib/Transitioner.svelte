@@ -7,13 +7,14 @@
         replaceState,
     } from "$app/navigation";
     import { page } from "$app/state";
-    import { timeout } from "$lib";
+    import { nextFrame, timeout } from "$lib";
     import { tick } from "svelte";
 
     const STRIP_ARRAY = [0, 1, 2, 3, 4];
 
     let hidden = $state(true);
     let sliding = $state(false);
+    let vertical = $state(false);
     let strip_pos = $state(-1);
     let slide_dir = $state("");
 
@@ -68,25 +69,31 @@
             slide_promise = timeout(602).then(reset);
             strip_pos = 1;
         } else {
+            slide_promise = timeout(1210).then(reset);
             const isPopState = info.type === "popstate";
             const start_pos = isPopState && info.delta < 0 ? 1 : -1;
-            sliding = false;
+            if (vertical == isPopState) {
+                vertical = !isPopState;
+                await tick();
+                await nextFrame();
+                await nextFrame();
+            }
+            await tick();
             hidden = false;
             strip_pos = start_pos;
             await tick();
-            await timeout(5);
+            await nextFrame();
+            await nextFrame();
             sliding = true;
             await tick();
             strip_pos = 0;
             if (isPopState) slide_dir = info.delta < 0 ? "<" : ">";
             await timeout(602);
             strip_pos = 1 + ~start_pos;
-            slide_promise = timeout(602).then(reset);
         }
     });
 
     afterNavigate(() => {
-        disableScrollHandling();
         nav_from_cover = false;
         if (page.state.cover_screen === 1) {
             console.debug(Date.now(), "Skip phantom state");
@@ -95,7 +102,13 @@
     });
 </script>
 
-<div class="wrapper" class:hidden class:sliding style:--pos={strip_pos}>
+<div
+    class="wrapper"
+    class:hidden
+    class:sliding
+    class:vertical
+    style:--pos={strip_pos}
+>
     {#each STRIP_ARRAY as v}
         <div class="strip" style:--idx={v}></div>
     {/each}
@@ -129,7 +142,7 @@
         width: 100%;
         max-width: 100vw;
         height: 100%;
-        overflow-x: hidden;
+        overflow: hidden;
         display: grid;
         grid-template-rows: repeat(5, 1fr);
         gap: 0px;
@@ -140,7 +153,7 @@
     }
 
     .strip {
-        width: 150vw;
+        width: 100%;
         height: 100%;
         background-color: var(--primary);
         box-shadow: 0 0 0 2px var(--primary);
@@ -203,6 +216,16 @@
         100% {
             opacity: 0;
             transform: translate(calc(var(--shift-end) - 50%), -50%);
+        }
+    }
+
+    @media (min-width: 46rem) and (min-aspect-ratio: 1/1) {
+        .wrapper.vertical {
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: 1fr;
+        }
+        .vertical > .strip {
+            transform: translateY(calc(var(--pos) * 101%));
         }
     }
 </style>

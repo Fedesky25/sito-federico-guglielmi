@@ -147,8 +147,8 @@
     .sliding > .strip {
         transition-property: transform;
         transition-timing-function: ease;
-        transition-duration: 300ms;
-        transition-delay: calc(var(--idx) * 100ms);
+        transition-duration: 400ms;
+        transition-delay: calc(var(--idx) * 50ms);
     }
 
     svg {

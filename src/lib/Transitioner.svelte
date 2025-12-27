@@ -19,6 +19,7 @@
 
     let nav_from_cover = false;
     let slide_promise: Promise<void> | null = null;
+    const cover_state = $derived(page.state.cover_screen || 0);
 
     async function reset() {
         console.debug(Date.now(), "Reset sliding");
@@ -40,7 +41,7 @@
             strip_pos = 0;
             await timeout(602);
         } else if (!cover && !nav_from_cover) {
-            console.log(Date.now(), "Uncover screen");
+            console.debug(Date.now(), "Uncover screen");
             strip_pos = -1;
             await timeout(602);
             reset();
@@ -49,7 +50,7 @@
     }
 
     $effect(() => {
-        slide_promise = onCoverChange(page.state.cover_screen);
+        slide_promise = onCoverChange(cover_state);
     });
 
     beforeNavigate(() => {
@@ -67,18 +68,20 @@
             slide_promise = timeout(602).then(reset);
             strip_pos = 1;
         } else {
-            slide_promise = timeout(1210).then(reset);
             const isPopState = info.type === "popstate";
             const start_pos = isPopState && info.delta < 0 ? 1 : -1;
+            sliding = false;
             hidden = false;
             strip_pos = start_pos;
             await tick();
+            await timeout(5);
             sliding = true;
             await tick();
             strip_pos = 0;
             if (isPopState) slide_dir = info.delta < 0 ? "<" : ">";
             await timeout(602);
             strip_pos = 1 + ~start_pos;
+            slide_promise = timeout(602).then(reset);
         }
     });
 

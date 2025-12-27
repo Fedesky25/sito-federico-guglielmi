@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Snippet } from "svelte";
+    import type { Snippet } from "svelte";
 
     interface Props {
         title: string;
@@ -25,7 +25,7 @@
             margin-right: auto;
 
             display: grid;
-            row-gap: 3rem;
+            row-gap: 2rem;
             column-gap: 2rem;
             grid-template-rows: auto 1fr;
             grid-template-columns: min-content var(--frame-body, 34ch);
@@ -36,7 +36,7 @@
         }
         .body {
             grid-column: 2;
-            grid-row: 1/3; 
+            grid-row: 1/3;
         }
         .smudge {
             grid-row: 2;

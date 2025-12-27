@@ -55,9 +55,10 @@
     <section class="nutshell bpad">
         <Framed title="TL;DR">
             <p>
-                I am a {age} years old young man currently enrolled at Politecnico
-                di Torino in the Master Degree
-                <span class="quote">Quantum Engineering</span>
+                I am a {age} years old young man currently pursuing a PhD degree at
+                Politecnico di Torino in scientific computing applied to electromagnetic
+                and quantum systems.
+                <!-- <span class="quote">Quantum Engineering</span> -->
             </p>
             <p>
                 I have a keen desire to create the new and refactor the old,

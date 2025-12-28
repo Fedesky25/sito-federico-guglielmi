@@ -109,9 +109,36 @@
                     Started coding websites as a side quest; ended up really
                     liking creating web UIs
                 </li>
-                <li>Proud owner of a friendly cat (see below)</li>
+                <li>Proud owner of a friendly cat (see below &darr;)</li>
             </ul>
         </Framed>
+        <div class="oliver-images">
+            <img
+                src="/oliver/chad.jpg"
+                alt="Oliver on its pillows in a distinguished pose"
+                style="--z: 1; --sz: 18rem; --rot: -15deg"
+            />
+            <img
+                src="/oliver/sky-watching.jpg"
+                alt="Oliver looking up to the sky from a balcony"
+                style="--z: 3; --sz: 22rem; --rot: -2deg; top: 3rem;"
+            />
+            <img
+                src="/oliver/curious.jpg"
+                alt="Oliver on the couch with curious open pupils towards the camera"
+                style="--z: 1; --rot: 5deg"
+            />
+            <img
+                src="/oliver/silly.jpg"
+                alt="Oliver lying down on my bed with the tip of the tongue out"
+                style="--z: 2; --rot: 10deg"
+            />
+            <img
+                src="/oliver/playful.jpg"
+                alt="Oliver inside a box trying to catch the camera with its pawn"
+                style="--z: 1; --rot: -7deg;"
+            />
+        </div>
     </section>
     <!-- <section class="bpad">
         <h2>In detail</h2>
@@ -243,5 +270,39 @@
         .traits li + li {
             margin-top: 1rem;
         }
+    }
+
+    .oliver-images {
+        max-width: 45rem;
+        margin: 10rem auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .oliver-images > img {
+        position: relative;
+        display: block;
+        max-width: var(--sz, 20rem);
+        max-height: var(--sz, 20rem);
+        padding: 1rem;
+        margin: -2rem;
+        background-color: #f4f4f4;
+        border-radius: 0.2rem;
+        box-shadow: 0 0 2rem rgb(0, 0, 0, 0.2);
+
+        z-index: var(--z);
+        transform: rotate(var(--rot, 0));
+        transition:
+            transform 0.2s ease,
+            z-index 0.2s 0.1s;
+    }
+    .oliver-images > img:hover {
+        transition:
+            transform 0.2s ease,
+            z-index 0.2s;
+        transform: scale(1.1);
+        z-index: 10;
     }
 </style>

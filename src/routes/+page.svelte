@@ -344,6 +344,8 @@
         --sz: calc(var(--factor, 1) * clamp(10rem, 55vw, 20rem));
         max-width: var(--sz);
         max-height: var(--sz);
+        width: auto;
+        height: auto;
         padding: clamp(0.5rem, 3vw, 1rem);
         margin: clamp(-2rem, -6vw, -1rem);
         background-color: #f4f4f4;

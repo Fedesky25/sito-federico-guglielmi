@@ -211,8 +211,10 @@
         --delay: 1.7s;
     }
     header p {
+        line-height: 0.95;
         font-size: 1.4em;
         text-align: center;
+        padding-inline: 2rem;
     }
     header :nth-child(2) {
         animation-delay: var(--delay);
@@ -225,6 +227,7 @@
     }
 
     .tags {
+        padding-inline: 1rem;
         margin-block: 1em;
         list-style: none;
         display: flex;

@@ -122,6 +122,8 @@
                     <img
                         src="/oliver/chad.jpg"
                         alt="Oliver on its pillows in a distinguished pose"
+                        width="887"
+                        height="887"
                     />
                 </FollowPointer>
             </div>
@@ -130,6 +132,9 @@
                     <img
                         src="/oliver/sky-watching.jpg"
                         alt="Oliver looking up to the sky from a balcony"
+                        loading="lazy"
+                        width="721"
+                        height="1081"
                     />
                 </FollowPointer>
             </div>
@@ -138,6 +143,9 @@
                     <img
                         src="/oliver/curious.jpg"
                         alt="Oliver on the couch with curious open pupils towards the camera"
+                        loading="lazy"
+                        width="1061"
+                        height="849"
                     />
                 </FollowPointer>
             </div>
@@ -146,6 +154,9 @@
                     <img
                         src="/oliver/silly.jpg"
                         alt="Oliver lying down on my bed with the tip of the tongue out"
+                        loading="lazy"
+                        width="960"
+                        height="1200"
                     />
                 </FollowPointer>
             </div>
@@ -154,6 +165,9 @@
                     <img
                         src="/oliver/playful.jpg"
                         alt="Oliver inside a box trying to catch the camera with its pawn"
+                        loading="lazy"
+                        width="1226"
+                        height="817"
                     />
                 </FollowPointer>
             </div>

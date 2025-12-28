@@ -121,22 +121,22 @@
             <img
                 src="/oliver/sky-watching.jpg"
                 alt="Oliver looking up to the sky from a balcony"
-                style="--z: 3; --sz: 22rem; --rot: -2deg; top: 3rem;"
+                style="--z: 5; --sz: 22rem; --rot: -2deg; top: 3rem;"
             />
             <img
                 src="/oliver/curious.jpg"
                 alt="Oliver on the couch with curious open pupils towards the camera"
-                style="--z: 1; --rot: 5deg"
+                style="--z: 2; --rot: 5deg"
             />
             <img
                 src="/oliver/silly.jpg"
                 alt="Oliver lying down on my bed with the tip of the tongue out"
-                style="--z: 2; --rot: 10deg"
+                style="--z: 4; --rot: 10deg"
             />
             <img
                 src="/oliver/playful.jpg"
                 alt="Oliver inside a box trying to catch the camera with its pawn"
-                style="--z: 1; --rot: -7deg;"
+                style="--z: 3; --rot: -7deg; bottom: 1rem;"
             />
         </div>
     </section>
@@ -279,6 +279,8 @@
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
+        perspective: 10000px;
+        transform-style: preserve-3d;
     }
 
     .oliver-images > img {
@@ -291,18 +293,22 @@
         background-color: #f4f4f4;
         border-radius: 0.2rem;
         box-shadow: 0 0 2rem rgb(0, 0, 0, 0.2);
+        user-select: none;
 
-        z-index: var(--z);
-        transform: rotate(var(--rot, 0));
+        transform: rotate(var(--rot, 0)) translateZ(calc(var(--z) * 1px));
         transition:
             transform 0.2s ease,
-            z-index 0.2s 0.1s;
+            filter 0.2s ease;
     }
-    .oliver-images > img:hover {
-        transition:
-            transform 0.2s ease,
-            z-index 0.2s;
-        transform: scale(1.1);
-        z-index: 10;
+
+    @media (pointer: fine) {
+        .oliver-images > img:hover {
+            transition: transform 0.2s ease;
+            transform: scale(1.1) translateZ(10px);
+            z-index: 10;
+        }
+        .oliver-images:has(> img:hover) > img:not(:hover) {
+            filter: saturate(50%) blur(3px);
+        }
     }
 </style>

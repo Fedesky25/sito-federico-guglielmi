@@ -3,6 +3,7 @@
     import TypeWriter from "$lib/TypeWriter.svelte";
     import Reveal from "$lib/Reveal.svelte";
     import Framed from "$lib/Framed.svelte";
+    import FollowPointer from "$lib/FollowPointer.svelte";
     import { frameThrottle, whenInView } from "$lib";
 
     const birthday = Date.UTC(2001, 11, 25);
@@ -29,6 +30,9 @@
             height / 4;
         movemottos();
     }
+
+    const transform = (x: number, y: number) =>
+        `rotate3d(${-y},${x},0,${-5e-2 * Math.hypot(x, y)}deg)`;
 </script>
 
 <svelte:head>
@@ -113,31 +117,46 @@
             </ul>
         </Framed>
         <div class="oliver-images">
-            <img
-                src="/oliver/chad.jpg"
-                alt="Oliver on its pillows in a distinguished pose"
-                style="--z: 1; --sz: 18rem; --rot: -15deg"
-            />
-            <img
-                src="/oliver/sky-watching.jpg"
-                alt="Oliver looking up to the sky from a balcony"
-                style="--z: 5; --sz: 22rem; --rot: -2deg; top: 3rem;"
-            />
-            <img
-                src="/oliver/curious.jpg"
-                alt="Oliver on the couch with curious open pupils towards the camera"
-                style="--z: 2; --rot: 5deg"
-            />
-            <img
-                src="/oliver/silly.jpg"
-                alt="Oliver lying down on my bed with the tip of the tongue out"
-                style="--z: 4; --rot: 10deg"
-            />
-            <img
-                src="/oliver/playful.jpg"
-                alt="Oliver inside a box trying to catch the camera with its pawn"
-                style="--z: 3; --rot: -7deg; bottom: 1rem;"
-            />
+            <div style="--z: 1; --sz: 18rem; --rot: -15deg">
+                <FollowPointer {transform}>
+                    <img
+                        src="/oliver/chad.jpg"
+                        alt="Oliver on its pillows in a distinguished pose"
+                    />
+                </FollowPointer>
+            </div>
+            <div style="--z: 5; --sz: 22rem; --rot: -2deg; top: 3rem;">
+                <FollowPointer {transform}>
+                    <img
+                        src="/oliver/sky-watching.jpg"
+                        alt="Oliver looking up to the sky from a balcony"
+                    />
+                </FollowPointer>
+            </div>
+            <div style="--z: 2; --rot: 5deg">
+                <FollowPointer {transform}>
+                    <img
+                        src="/oliver/curious.jpg"
+                        alt="Oliver on the couch with curious open pupils towards the camera"
+                    />
+                </FollowPointer>
+            </div>
+            <div style="--z: 4; --rot: 10deg">
+                <FollowPointer {transform}>
+                    <img
+                        src="/oliver/silly.jpg"
+                        alt="Oliver lying down on my bed with the tip of the tongue out"
+                    />
+                </FollowPointer>
+            </div>
+            <div style="--z: 3; --rot: -7deg; bottom: 1rem;">
+                <FollowPointer {transform}>
+                    <img
+                        src="/oliver/playful.jpg"
+                        alt="Oliver inside a box trying to catch the camera with its pawn"
+                    />
+                </FollowPointer>
+            </div>
         </div>
     </section>
     <!-- <section class="bpad">
@@ -282,10 +301,26 @@
         perspective: 10000px;
         transform-style: preserve-3d;
     }
-
-    .oliver-images > img {
+    .oliver-images > div {
         position: relative;
-        display: block;
+        width: fit-content;
+        transform: rotate(var(--rot, 0)) translateZ(calc(var(--z) * 1px));
+        transition:
+            transform 0.2s ease,
+            filter 0.2s ease;
+    }
+    @media (pointer: fine) {
+        .oliver-images > div:hover {
+            transition: transform 0.2s ease;
+            transform: scale(1.2) translateZ(10px);
+            z-index: 10;
+        }
+        .oliver-images:has(> div:hover) > div:not(:hover) {
+            filter: saturate(50%) blur(3px);
+        }
+    }
+
+    .oliver-images img {
         max-width: var(--sz, 20rem);
         max-height: var(--sz, 20rem);
         padding: 1rem;
@@ -294,21 +329,5 @@
         border-radius: 0.2rem;
         box-shadow: 0 0 2rem rgb(0, 0, 0, 0.2);
         user-select: none;
-
-        transform: rotate(var(--rot, 0)) translateZ(calc(var(--z) * 1px));
-        transition:
-            transform 0.2s ease,
-            filter 0.2s ease;
-    }
-
-    @media (pointer: fine) {
-        .oliver-images > img:hover {
-            transition: transform 0.2s ease;
-            transform: scale(1.1) translateZ(10px);
-            z-index: 10;
-        }
-        .oliver-images:has(> img:hover) > img:not(:hover) {
-            filter: saturate(50%) blur(3px);
-        }
     }
 </style>

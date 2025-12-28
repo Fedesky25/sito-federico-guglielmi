@@ -117,7 +117,7 @@
             </ul>
         </Framed>
         <div class="oliver-images">
-            <div style="--z: 1; --sz: 18rem; --rot: -15deg">
+            <div style="--z: 1; --factor: 0.9; --rot: -15deg">
                 <FollowPointer {transform}>
                     <img
                         src="/oliver/chad.jpg"
@@ -125,7 +125,7 @@
                     />
                 </FollowPointer>
             </div>
-            <div style="--z: 5; --sz: 22rem; --rot: -2deg; top: 3rem;">
+            <div style="--z: 5; --factor: 1.1; --rot: -2deg; --offset: 2rem;">
                 <FollowPointer {transform}>
                     <img
                         src="/oliver/sky-watching.jpg"
@@ -149,7 +149,7 @@
                     />
                 </FollowPointer>
             </div>
-            <div style="--z: 3; --rot: -7deg; bottom: 1rem;">
+            <div style="--z: 3; --rot: -7deg; --offset: -1rem;">
                 <FollowPointer {transform}>
                     <img
                         src="/oliver/playful.jpg"
@@ -298,22 +298,28 @@
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
-        perspective: 10000px;
-        transform-style: preserve-3d;
     }
     .oliver-images > div {
-        position: relative;
         width: fit-content;
-        transform: rotate(var(--rot, 0)) translateZ(calc(var(--z) * 1px));
-        transition:
-            transform 0.2s ease,
-            filter 0.2s ease;
+        z-index: var(--z);
+        transform: rotate(var(--rot, 0));
     }
+
     @media (pointer: fine) {
+        .oliver-images {
+            perspective: 10000px;
+            transform-style: preserve-3d;
+        }
+        .oliver-images > div {
+            z-index: unset;
+            transform: rotate(var(--rot, 0)) translateZ(calc(var(--z) * 1px));
+            transition:
+                transform 0.2s ease,
+                filter 0.2s ease;
+        }
         .oliver-images > div:hover {
             transition: transform 0.2s ease;
             transform: scale(1.2) translateZ(10px);
-            z-index: 10;
         }
         .oliver-images:has(> div:hover) > div:not(:hover) {
             filter: saturate(50%) blur(3px);
@@ -321,13 +327,21 @@
     }
 
     .oliver-images img {
-        max-width: var(--sz, 20rem);
-        max-height: var(--sz, 20rem);
-        padding: 1rem;
-        margin: -2rem;
+        --sz: calc(var(--factor, 1) * clamp(10rem, 55vw, 20rem));
+        max-width: var(--sz);
+        max-height: var(--sz);
+        padding: clamp(0.5rem, 3vw, 1rem);
+        margin: clamp(-2rem, -6vw, -1rem);
         background-color: #f4f4f4;
         border-radius: 0.2rem;
         box-shadow: 0 0 2rem rgb(0, 0, 0, 0.2);
         user-select: none;
+    }
+
+    @media (min-width: 32rem) {
+        .oliver-images > div {
+            position: relative;
+            top: var(--offset, 0);
+        }
     }
 </style>
